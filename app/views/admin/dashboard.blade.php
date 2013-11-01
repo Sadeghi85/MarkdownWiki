@@ -1,16 +1,9 @@
 @extends('layouts.admin')
 
-{{--  @section('sidebar')
-     @parent
-
-    <p>This is appended to the master sidebar.</p> 
- @stop
---}}
-
 @section('content')
 
-<div class="row-fluid">
-  <div class="span12">
+<div class="row">
+  <div class="col-md-12">
       <!-- Success-Messages -->
       @if ($message = Session::get('success'))
           <div class="alert alert-success alert-block">
@@ -23,11 +16,11 @@
   </div>
 </div>
 
-<div class="row-fluid">
-  <div class="span12">
-<div class="well">
+<div class="row">
+  <div class="col-md-12">
+<div class="well" style="direction:ltr;">
     <div class="btn-group" data-toggle="buttons-checkbox">
-        <a class="btn collapse-data-btn" data-toggle="collapse" href="#php-markdown-help">PHP-Markdown Help</a>
+        <a class="btn btn-default collapse-data-btn" data-toggle="collapse" href="#php-markdown-help">PHP-Markdown Help</a>
     </div>
     <div id="php-markdown-help" class="collapse">
         <p>
@@ -392,9 +385,9 @@ Header 2
     </div>
 </div>
 
-<div class="well">
+<div class="well" style="direction:ltr;">
     <div class="btn-group" data-toggle="buttons-checkbox">
-        <a class="btn collapse-data-btn" data-toggle="collapse" href="#php-markdown-extra-help">PHP-Markdown Extra Help</a>
+        <a class="btn btn-default collapse-data-btn" data-toggle="collapse" href="#php-markdown-extra-help">PHP-Markdown Extra Help</a>
     </div>
     <div id="php-markdown-extra-help" class="collapse">
         <p>
@@ -896,9 +889,9 @@ is maintained by the &lt;abbr title="World Wide Web Consortium"&gt;W3C&lt;/abbr&
 
 
 
-<div class="well">
+<div class="well" style="direction:ltr;">
     <div class="btn-group" data-toggle="buttons-checkbox">
-        <a class="btn collapse-data-btn" data-toggle="collapse" href="#search-help">Advanced Search Help</a>
+        <a class="btn btn-default collapse-data-btn" data-toggle="collapse" href="#search-help">Advanced Search Help</a>
     </div>
     <div id="search-help" class="collapse">
         <p>

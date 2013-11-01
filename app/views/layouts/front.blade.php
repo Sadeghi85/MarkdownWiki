@@ -16,11 +16,13 @@
 
     <!-- Bootstrap -->
     <link href="{{ asset('/assets/css/bootstrap.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ asset('/assets/css/bootstrap-theme.css') }}" rel="stylesheet" media="screen">
     
-    @if (Config::get('app.locale') == 'fa')
+  @if (Config::get('app.locale') == 'fa')
     <link href="{{ asset('/assets/css/bootstrap-rtl.css') }}" rel="stylesheet" media="screen">
-    @endif
+  @endif
+
+    <link href="{{ asset('/assets/css/bootstrap-theme.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('/assets/css/bootstrap-extra.css') }}" rel="stylesheet" media="screen">
 
     <link href="{{ asset('/assets/css/highlight.js/styles/vs.css') }}" rel="stylesheet">
 

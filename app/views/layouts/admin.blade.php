@@ -16,11 +16,13 @@
 
     <!-- Bootstrap -->
     <link href="{{ asset('/assets/css/bootstrap.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ asset('/assets/css/bootstrap-theme.css') }}" rel="stylesheet" media="screen">
     
-    @if (Config::get('app.locale') == 'fa')
+  @if (Config::get('app.locale') == 'fa')
     <link href="{{ asset('/assets/css/bootstrap-rtl.css') }}" rel="stylesheet" media="screen">
-    @endif
+  @endif
+
+    <link href="{{ asset('/assets/css/bootstrap-theme.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('/assets/css/bootstrap-extra.css') }}" rel="stylesheet" media="screen">
 
     <link href="{{ asset('/assets/css/highlight.js/styles/vs.css') }}" rel="stylesheet">
  
@@ -81,57 +83,53 @@
        {{ Lang::get('site.logged-in-as', array('name' => sprintf('<a href="#" class="navbar-link">%s</a>', Auth::user()->username))) }}  (<a href="{{ URL::Route('logout') }}">{{ Lang::get('site.logout') }}</a>)
       </p>
     </div>
-    
+
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="{{ URL::to('') }}">Front</a></li>
+        <li class="active"><a href="#">{{ Lang::get('site.dashboard') }}</a></li>
+        <li><a href="{{ URL::to('') }}">{{ Lang::get('site.site') }}</a></li>
       </ul>
     </div><!--/.nav-collapse -->
    </div>
  </div>
 @show
 
- <div class="container-fluid">
- <div class="row-fluid">
- <div class="span2">
- <div class="well sidebar-nav">
- <ul class="nav nav-list">
- <li class="nav-header">Tasks</li>
+@section('container')
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">{{ Lang::get('site.tasks') }}</li>
+          <?php
+            $navs = array(
+            array('label' => Lang::get('site.home'), 'routes' => array('default'=>'dashboard')),
+            //array('label' => 'New', 'routes' => array('default'=>'new')),
+            //array('label' => 'Posts', 'routes' => array('default'=>'posts', 'edit')),
+            //array('label' => 'Lists', 'routes' => array('default'=>'lists')),
+            );
+          ?>
+          @foreach ($navs as $nav)
+            @if (in_array(Route::currentRouteName(), $nav['routes']))
+              <li class="active"><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+            @else
+              <li><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+            @endif
+          @endforeach
+        </ul>
+      </div><!--/.well -->
+   </div><!--/.col-->
 
-<?php
-  $nav = array();
-  $nav1 = array(
-      array('label' => 'Home', 'routes' => array('default'=>'dashboard')),
-      array('label' => 'New', 'routes' => array('default'=>'new')),
-      array('label' => 'Posts', 'routes' => array('default'=>'posts', 'edit')),
-      array('label' => 'Lists', 'routes' => array('default'=>'lists')),
-  );
-?>
-@foreach ($nav as $n)
-  @if (in_array(Route::currentRouteName(), $n['routes']))
-    <li class="active"><a href="{{ URL::Route($n['routes']['default']) }}">{{{ $n['label'] }}}</a></li>
-  @else
-    <li><a href="{{ URL::Route($n['routes']['default']) }}">{{{ $n['label'] }}}</a></li>
-  @endif
-@endforeach
-
-   </ul>
-   </div><!--/.well -->
-   </div><!--/span-->
-
-   <div class="span10">
- 
-   <div class="row-fluid">
-   <div class="span12">
-   @yield('content')
-   </div>
-   </div>
-
-    </div><!--/span-->
-    </div><!--/row-->
-
-    </div><!--/.fluid-container-->
+   <div class="col-md-10">
+     <div class="row">
+       <div class="col-md-12">
+        @yield('content')
+       </div>
+     </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+</div><!--/.container-->
+@show
 
 @section('javascript')
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
