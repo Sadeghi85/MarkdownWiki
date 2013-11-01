@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'mark-down-wiki2',
+			'database'  => 'markdown-wiki2',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',
