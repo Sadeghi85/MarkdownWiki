@@ -20,4 +20,11 @@ class SlugHistories extends Eloquent {
     {
         return $this->belongsTo('Post');
     }
+
+    public static function lastSlug($id)
+    {
+    	$oSlug = self::where('post_id', $id)->orderBy('id', 'desc')->select('slug')->first();
+
+		return $oSlug->slug;
+    }
 }

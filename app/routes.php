@@ -24,7 +24,7 @@ Route::post('administrator', array('before' => 'csrf', 'as' => 'do-login', 'uses
 
 // Tags
 Route::get('tag/{tag}', array('as' => 'tag', 'uses' => 'Front\HomeController@showTagPosts'))
-->where('tag', '[0-9a-z\p{S}-]+');
+->where('tag', '[\p{N}\p{L}\p{S}]+');
 
 // Zip contents
 Route::get('zip', array('as' => 'zip', 'uses' => 'Front\HomeController@zipContents'));
@@ -46,4 +46,42 @@ Route::get('administrator/logout', array('as' => 'logout', function() {
 // Dashboard home
 Route::get('administrator/dashboard', array('as' => 'dashboard', 'uses' => 'Admin\DashboardController@showDashboard'));
 
+// New post
+Route::get('administrator/new', array('as' => 'new', 'uses' => 'Admin\DashboardController@showNew'));
+Route::post('administrator/new', array('before' => 'csrf', 'as' => 'do-new', 'uses' => 'Admin\DashboardController@doNew'));
+
+
+
+
+
+
+
+
+
+
+
+
+// Catch all
+Route::get('{main_tag}/{post_id}_{slug}', function($main_tag, $post_id, $slug)
+{
+	$thisSlug = SlugHistories::where('post_id', $post_id)->where('slug', sprintf('/%s/%s_%s', $main_tag, $post_id, $slug))->select('slug')->first();
+	$lastSlug = SlugHistories::where('post_id', $post_id)->orderBy('id', 'desc')->select('slug')->first();
+
+	if ($thisSlug->slug == $lastSlug->slug)
+	{
+		$post = Post::where('id', $post_id)->where('published', 1)->first();
+
+		if ($post)
+		{
+			return View::make('front.show_post', array('title' => $post->title, 'content' => $post->content));
+		}
+	}
+	elseif ($thisSlug and $lastSlug)
+	{
+		return Redirect::to($lastSlug->slug);
+	}
+
+	App::abort(404, 'Page not found');
+})
+->where('main_tag', '[^\/_]+')->where('post_id', '\d+')->where('slug', '[^\/_]+');
 

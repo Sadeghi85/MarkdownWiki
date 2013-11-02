@@ -1,52 +1,37 @@
 @extends('layouts.front')
 
-{{--  @section('sidebar')
-     @parent
-
-    <p>This is appended to the master sidebar.</p> 
- @stop
---}}
-
 @section('style')
 	@parent
-    <style type="text/css">
-  		.home-posts {
-  			background-color: #fff;
-	        border: 1px solid #e5e5e5;
-	        -webkit-border-radius: 5px;
-	        -moz-border-radius: 5px;
-	        border-radius: 5px;
-	        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  		}
-    </style>
- @stop
+  
+@stop
 
 @section('content')
-
-	<div class="row-fluid home-posts">
-  <div class="offset1 span10">
+	<div class="row box">
+  <div class="col-md-offset-1 col-md-10">
     @foreach ($posts as $post)
-      <div class="row-fluid">
-        <div class="span12">
-          <h4><strong><a href="{{ Sadeghi85\Utility::getSlug($post->id) }}" target="_blank">{{ $post->title }}</a></strong></h4>
+    <?php
+      $href = SlugHistories::lastSlug($post->id);
+    ?>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2><a href="{{ $href }}" target="_blank">{{ $post->title }}</a></h2>
         </div>
       </div>
-      <div class="row-fluid">
-        <div class="span12">      
+      <div class="row">
+        <div class="col-md-12">      
           <p>
             <?php
               $md = new dflydev\markdown\MarkdownExtraParser();
             ?>
-            {{ $md->transformMarkdown(html_entity_decode(Sadeghi85\Utility::getAbstract($post->content), ENT_QUOTES, 'UTF-8')); }}
+            {{ $md->transformMarkdown(html_entity_decode(Sadeghi85\Utility::getAbstract($post->content), ENT_QUOTES, 'UTF-8')) }}
             
           </p>
-          <p><a class="btn" href="{{ Sadeghi85\Utility::getSlug($post->id) }}" target="_blank">Read more</a></p>
+          <p><a class="btn" href="{{ $href }}" target="_blank">Read more</a></p>
         </div>
       </div>
-      <div class="row-fluid">
-        <div class="span12">
+      <div class="row">
+        <div class="col-md-12">
           <p></p>
           <p>
             {{-- <i class="icon-user"></i> by <a href="#">John</a> 
@@ -67,7 +52,9 @@
         </div>
       </div>
 
-      <hr>
+    </div>
+
+    <hr>
 
     @endforeach
 

@@ -28,28 +28,7 @@
 
   @section('style')
     <style type="text/css">
-  		body {
-  			padding-top: 70px;
-  			padding-bottom: 40px;
-        background-color: #f5f5f5;
-
-        font-family: "Trebuchet MS",Tahoma,Arial,sans-serif;
-        font-size: 14px;
-        line-height: 20px;
-        color: #333;
-  		}
-
-      .footer {
-        padding: 10px 10px;
-        background-color: #fff;
-          border: 1px solid #e5e5e5;
-          -webkit-border-radius: 5px;
-          -moz-border-radius: 5px;
-          border-radius: 5px;
-          -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      }
+      
     </style>
   @show
 
@@ -126,7 +105,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="footer">
+        <div class="box">
           {{ Config::get('site.copyright') }}
         </div>
       </div>

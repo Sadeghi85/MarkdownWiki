@@ -26,32 +26,11 @@
 
     <link href="{{ asset('/assets/css/highlight.js/styles/vs.css') }}" rel="stylesheet">
  
-  @section('style') 
+@section('style') 
    <style type="text/css">
-    body {
-      padding-top: 70px;
-      padding-bottom: 40px;
-      background-color: #f5f5f5;
-
-      font-family: "Trebuchet MS",Tahoma,Arial,sans-serif;
-      font-size: 14px;
-      line-height: 20px;
-      color: #333;
-    }
-    .sidebar-nav {
-     padding: 9px 0;
-    }
-
-    @media (max-width: 980px) {
-     /* Enable use of floated navbar text */
-     .navbar-text.pull-right {
-       float: none;
-       padding-left: 5px;
-       padding-right: 5px;
-     }
-    }
+   
    </style>
-  @show
+@show
   
  <link href="{{ asset('/assets/css/bootstrap-markdown.min.css') }}" rel="stylesheet">
  <link href="{{ asset('/assets/css/bootstrap-tag.css') }}" rel="stylesheet">
@@ -103,10 +82,10 @@
           <li class="nav-header">{{ Lang::get('site.tasks') }}</li>
           <?php
             $navs = array(
-            array('label' => Lang::get('site.home'), 'routes' => array('default'=>'dashboard')),
-            //array('label' => 'New', 'routes' => array('default'=>'new')),
-            //array('label' => 'Posts', 'routes' => array('default'=>'posts', 'edit')),
-            //array('label' => 'Lists', 'routes' => array('default'=>'lists')),
+              array('label' => Lang::get('site.home'), 'routes' => array('default'=>'dashboard')),
+              array('label' => Lang::get('site.new'), 'routes' => array('default'=>'new')),
+              //array('label' => 'Posts', 'routes' => array('default'=>'posts', 'edit')),
+              //array('label' => 'Lists', 'routes' => array('default'=>'lists')),
             );
           ?>
           @foreach ($navs as $nav)
@@ -136,6 +115,7 @@
     <script src="{{ asset('/assets/js/jquery-1.10.2.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap-typeahead.min.js') }}"></script>
 
     <script src="{{ asset('/assets/js/bootstrap-markdown.js') }}"></script>
     <script src="{{ asset('/assets/js/markdown.js') }}"></script>

@@ -34,11 +34,11 @@ class DashboardController extends \BaseController {
         $userData = array(
         	'task' => \Input::get('task'),
             'title' => \Input::get('title'),
-            'main_tag' => \Input::get('main_tag'),
+            'main-tag' => \Input::get('main-tag'),
             'content' => \Input::get('content'),
             
-            'slug' => \Input::get('slug'),
-            'minor_tags' => \Input::get('minor_tags'),
+            'alias' => \Input::get('alias'),
+            'minor-tags' => \Input::get('minor-tags'),
             'publish' => \Input::get('publish'),
             'list' => \Input::get('list'),
         );
@@ -47,7 +47,7 @@ class DashboardController extends \BaseController {
         $rules = array(
         	'task'  => 'Required',
             'title'  => 'Required',
-            'main_tag'  => 'Required',
+            'main-tag'  => 'Required',
             'content'  => 'Required',
         );
 
@@ -66,34 +66,34 @@ class DashboardController extends \BaseController {
         	########## Title
         	$userData['title'] = Sanitize::title($userData['title']);
 
-        	########## Slug
-        	if ( ! $userData['slug'])
+        	########## Alias
+        	if ( ! $userData['alias'])
         	{
-        		$userData['slug'] = $userData['title'];
+        		$userData['alias'] = $userData['title'];
         	}
 
-        	$userData['slug'] = Sanitize::slug($userData['slug']);
+        	$userData['alias'] = Sanitize::alias($userData['alias']);
 
             ######### Tags
-			$userData['main_tag'] = Sanitize::tag($userData['main_tag']);
+			$userData['main-tag'] = Sanitize::tag($userData['main-tag']);
 
-			$temp_tags = array_filter(explode(',', $userData['minor_tags']), 'strlen');
+			$tempTags = array_filter(explode(',', $userData['minor-tags']), 'strlen');
 
             $tags = array();
 
-            foreach ($temp_tags as $temp_tag)
+            foreach ($tempTags as $tempTag)
 			{
-				$tags[] = Sanitize::tag($temp_tag);
+				$tags[] = Sanitize::tag($tempTag);
 			}
 
-			$tags[] = $userData['main_tag'];
+			$tags[] = $userData['main-tag'];
 			$tags = array_unique($tags);
             
             ############
 
             $rules = array(
-	            'slug'  => 'required|unique:posts,slug',
-	            'main_tag'  => 'Required',
+	            'alias'  => 'required|unique:posts,alias',
+	            'main-tag'  => 'Required',
 	        );
 
 	        $validator = \Validator::make($userData, $rules);
@@ -110,20 +110,20 @@ class DashboardController extends \BaseController {
 			$oPost->published = (int)(bool)($userData['publish']);
 			$oPost->list = (int)(bool)($userData['list']);
 			$oPost->title = ($userData['title']);
-			$oPost->slug = $userData['slug'];
-			$oPost->main_tag = ($userData['main_tag']);
+			$oPost->alias = $userData['alias'];
+			$oPost->main_tag = ($userData['main-tag']);
 			$oPost->content = ($userData['content']);
 
 			$oPost->save();
 
 			$oSlug = new \SlugHistories;
 			$oSlug->post_id = $oPost->id;
-			$oSlug->slug = sprintf('/%s/%s_%s', $userData['main_tag'], $oPost->id, $userData['slug']);
+			$oSlug->slug = sprintf('/%s/%s_%s', $userData['main-tag'], $oPost->id, $userData['alias']);
 			$oSlug->save();
 
 			foreach ($tags as $tag)
 			{
-				$oTag = \Tag::where('tag', '=', $tag)->first();
+				$oTag = \Tag::where('tag', $tag)->first();
 
 				if ($oTag)
 				{
@@ -147,7 +147,7 @@ class DashboardController extends \BaseController {
 				// 	break;
 				case 'save':
 					// Redirect to posts
-            		return \Redirect::route('dashboard')->with('success', 'Post is created.');
+            		return \Redirect::route('dashboard')->with('success', \Lang::get('site.post-created'));
 					break;
 
 				default:
