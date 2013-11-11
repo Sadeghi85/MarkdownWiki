@@ -126,7 +126,7 @@
         'class' : "tag"
       })
       .text(value.toString())
-      .append($('<button type="button" class="close">&times;</button>')
+      .append($('<button type="button" class="close">&nbsp;&times;</button>')
         .on('click', function () {
           that.remove(that.element.siblings('.tag').index($(this).closest('.tag')))
         })

@@ -72,8 +72,8 @@
 
 		<!-- Submit button -->
 		<div class="form-group">
-				<button href="#" onclick="submitform('save')" class="btn btn-success"><i class="icon-ok"></i>{{ Lang::get('site.save') }}</button>
-				<button href="#" onclick="submitform('cancel')" class="btn btn-default"><i class="icon-remove"></i>{{ Lang::get('site.close') }}</button>
+				<button href="#" onclick="submitform('save')" class="btn btn-success"><i class="icon-ok">&nbsp;</i>{{ Lang::get('site.save') }}</button>
+				<button href="#" onclick="submitform('cancel')" class="btn btn-default"><i class="icon-remove">&nbsp;</i>{{ Lang::get('site.close') }}</button>
 		</div>
 
 		<p>&nbsp;</p>

@@ -26,6 +26,14 @@ h6,
   font-family: "Iranian Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+th {
+  text-align: right;
+}
+
+.pagination li {
+  float: right;
+}
+
 .navbar-brand {
   float: right;
 }
@@ -992,4 +1000,8 @@ h6,
     margin-right: 91.66666666666666%;
 	margin-left: 0;
   }
+}
+
+.md-header.btn-toolbar div {
+  float: right;
 }

@@ -84,8 +84,8 @@
             $navs = array(
               array('label' => Lang::get('site.home'), 'routes' => array('default'=>'dashboard')),
               array('label' => Lang::get('site.new'), 'routes' => array('default'=>'new')),
-              //array('label' => 'Posts', 'routes' => array('default'=>'posts', 'edit')),
-              //array('label' => 'Lists', 'routes' => array('default'=>'lists')),
+              array('label' => Lang::get('site.posts'), 'routes' => array('default'=>'posts', 'edit')),
+              array('label' => Lang::get('site.lists'), 'routes' => array('default'=>'lists')),
             );
           ?>
           @foreach ($navs as $nav)

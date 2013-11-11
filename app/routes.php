@@ -50,9 +50,16 @@ Route::get('administrator/dashboard', array('as' => 'dashboard', 'uses' => 'Admi
 Route::get('administrator/new', array('as' => 'new', 'uses' => 'Admin\DashboardController@showNew'));
 Route::post('administrator/new', array('before' => 'csrf', 'as' => 'do-new', 'uses' => 'Admin\DashboardController@doNew'));
 
+// List posts
+Route::get('administrator/posts', array('as' => 'posts', 'uses' => 'Admin\PostsController@showPosts'));
+// List lists
+Route::get('administrator/lists', array('as' => 'lists', 'uses' => 'Admin\PostsController@showLists'));
 
-
-
+// Edit post
+Route::get('administrator/edit/{id}', array('as' => 'edit', 'uses' => 'Admin\PostsController@showEdit'))
+->where('id', '\d+');
+Route::post('administrator/edit/{id}', array('before' => 'csrf', 'as' => 'do-edit', 'uses' => 'Admin\PostsController@doEdit'))
+->where('id', '\d+');
 
 
 
