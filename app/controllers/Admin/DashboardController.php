@@ -1,7 +1,7 @@
 <?php namespace Admin;
 
-use Sadeghi85\Path;
 use Sadeghi85\Sanitize;
+use Sadeghi85\Utility;
 
 class DashboardController extends \BaseController {
 
@@ -110,15 +110,18 @@ class DashboardController extends \BaseController {
 			$oPost->published = (int)(bool)($userData['publish']);
 			$oPost->list = (int)(bool)($userData['list']);
 			$oPost->title = ($userData['title']);
-			$oPost->alias = $userData['alias'];
+			$oPost->alias = ($userData['alias']);
 			$oPost->main_tag = ($userData['main-tag']);
 			$oPost->content = ($userData['content']);
+			$oPost->search_content = Utility::setSearchContent($userData['content']);
+			$oPost->search_title = Utility::setSearchContent($userData['title']);
 
 			$oPost->save();
 
 			$oSlug = new \SlugHistories;
 			$oSlug->post_id = $oPost->id;
 			$oSlug->slug = sprintf('/%s/%s_%s', $userData['main-tag'], $oPost->id, $userData['alias']);
+
 			$oSlug->save();
 
 			foreach ($tags as $tag)
@@ -133,6 +136,7 @@ class DashboardController extends \BaseController {
 				{
 					$oTag = new \Tag;
 					$oTag->tag = $tag;
+
 					$oTag->save();
 
 					$oPost->tags()->attach($oTag->id);

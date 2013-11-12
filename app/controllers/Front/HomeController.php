@@ -26,7 +26,8 @@ class HomeController extends \BaseController {
 
      public function showSearch()
     {
-        $results = \Post::search(\Input::get('s'));
+        $oSearch = new \Post;
+        $results = $oSearch->search(\Input::get('s'));
                
         return \View::make('front.show_search', array('results' => $results));
     }

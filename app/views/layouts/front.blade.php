@@ -64,13 +64,13 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{Lang::get('site.more')}} <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li class="dropdown-header">{{Lang::get('site.more')}}</li>
-                <li><a href="{{-- URL::Route('zip') --}}" target="_blank">{{Lang::get('site.zip')}}</a></li>
-                <li><a href="{{-- URL::Route('dashboard') --}}" target="_blank">{{Lang::get('site.dashboard')}}</a></li>
+                <li><a href="{{ URL::Route('zip') }}">{{Lang::get('site.zip')}}</a></li>
+                <li><a href="{{ URL::Route('dashboard') }}">{{Lang::get('site.dashboard')}}</a></li>
 
                 <li class="divider"></li>
 
                 @if (Auth::check())
-                  <li><a href="{{-- URL::route('logout') --}}">{{Lang::get('site.logout')}}</a></li>
+                  <li><a href="{{ URL::route('logout') }}">{{Lang::get('site.logout')}}</a></li>
                 @else
                   <li><a href="{{ URL::route('login') }}">{{Lang::get('site.login')}}</a></li>
                 @endif

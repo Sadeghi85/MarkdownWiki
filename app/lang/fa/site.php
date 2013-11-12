@@ -8,6 +8,7 @@ return array(
     'new' => 'جدید',
     'success' => 'با موفقیت انجام شد',
     'post-created' => 'مطلب ایجاد شد',
+    'post-edited' => 'مطلب ویرایش شد',
     'new-post' => 'مطلب جدید',
     'edit-post' => 'ویرایش مطلب',
     'save' => 'ذخیره',

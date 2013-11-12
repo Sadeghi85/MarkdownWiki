@@ -54,22 +54,20 @@
     <span style="text-align:center;"><h5>LISTS</h5></span>
     <div class="col-md-12">
       <?php
-          //$lists = Post::where('list', 1)->with('slugHistories')->paginate(10);
+          $lists = Post::where('list', 1)->with('slugHistories')->paginate(10);
       ?>
 
       <ul>
-        {{--
           @foreach ($lists as $list)
             <?php
               $oSlug = $list->slugHistories()->orderBy('id', 'desc')->first();
             ?>
-            <li><a href="{{ $oSlug->slug }}" target="_blank">{{ $list->title }}</a></li>
+            <li><a href="{{ $oSlug->slug }}">{{ $list->title }}</a></li>
           @endforeach
-        --}}
       </ul>
 
       
-        {{-- $lists->links() --}}
+        {{ $lists->links() }}
     </div>
   </div>
 
@@ -80,29 +78,29 @@
     <span style="text-align:center;"><h5>TAGS</h5></span>
     <div class="col-md-12">
       <?php
-          // $tags = Tag::has('posts')->get();
+          $tags = Tag::has('posts')->get();
 
-          // // $tags = Tag::whereIn('id', function($query) {
-          // //             $query->select('tag_id')->from('post_tag');
-          // //          })->get();
+          // $tags = Tag::whereIn('id', function($query) {
+          //             $query->select('tag_id')->from('post_tag');
+          //          })->get();
 
-          // //$tags = Tag::all();
+          //$tags = Tag::all();
 
-          // $cloud = array();
+          $cloud = array();
 
-          // foreach ($tags as $tag)
-          // {
-          //   if ($tag->posts()->where('published', 1)->count() > 0)
-          //   {
-          //     $cloud[] = array('title'=>str_replace('-', ' ', $tag->tag), 'weight'=>$tag->posts->count(), 'params'=>array('url'=>'/tag/'.$tag->tag));
-          //   }
-          // }
+          foreach ($tags as $tag)
+          {
+            if ($tag->posts()->where('published', 1)->count() > 0)
+            {
+              $cloud[] = array('title'=>str_replace('-', ' ', $tag->tag), 'weight'=>$tag->posts->count(), 'params'=>array('url'=>'/tag/'.$tag->tag));
+            }
+          }
 
-          // // Create the cloud and assign static tags to it
-          // $oCloud = new Zend\Tag\Cloud(array('tags' => $cloud));
+          // Create the cloud and assign static tags to it
+          $oCloud = new Zend\Tag\Cloud(array('tags' => $cloud));
 
-          // // Render the cloud
-          // echo $oCloud;
+          // Render the cloud
+          echo $oCloud;
            
       ?>
     </div>

@@ -23,12 +23,14 @@ class CreatePostsTable extends Migration {
 			$table->string('alias')->unique();
 			$table->string('main_tag');
 			$table->text('content');
+			$table->string('search_title');
+			$table->text('search_content');
 			$table->timestamps();
 			
 			$table->softDeletes();
 		});
 
-		DB::statement('ALTER TABLE `posts` ADD FULLTEXT search_fulltext (`title`, `content`)');
+		DB::statement('ALTER TABLE `posts` ADD FULLTEXT search_fulltext (`search_title`, `search_content`)');
 	}
 
 	/**

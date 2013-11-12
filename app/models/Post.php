@@ -31,17 +31,32 @@ class Post extends Eloquent {
         
     }
 
-    public function search($terms)
+    public function search($str)
     {
-    	$terms = trim($terms);
+    	$str = trim($str);
 
-        $escapedTerms = DB::connection()->getPdo()->quote($terms);
+    	$terms = array();
+    	$explodedTerms = explode(' ', $str);
 
-        return $this->select(array('*', DB::raw(sprintf('MATCH (title, content) AGAINST (%s IN BOOLEAN MODE) AS score', $escapedTerms))))
-        ->whereRaw('MATCH (title,content) AGAINST (? IN BOOLEAN MODE)', array($terms))
-        ->orderBy('score', 'desc')
+    	foreach ($explodedTerms as $explodedTerm)
+    	{
+    		$terms[] = preg_replace('#(\(|^)([^\(\)]{2,3})(\)|$)#iu', '\1\2*\3', $explodedTerm);
+    	}
+
+    	$terms = implode(' ', $terms);
+
+    	return $this->whereRaw('MATCH (search_title, search_content) AGAINST (? IN BOOLEAN MODE)', array($terms))
+    	->orderBy('updated_at', 'desc')
         ->with('slugHistories')
         ->paginate(10);
+
+        // $escapedTerms = DB::connection()->getPdo()->quote($terms);
+
+        // return self::select(array('*', DB::raw(sprintf('MATCH (search_title, search_content) AGAINST (%s IN BOOLEAN MODE) AS score', $escapedTerms))))
+        // ->whereRaw('MATCH (search_title, search_content) AGAINST (? IN BOOLEAN MODE)', array($terms))
+        // ->orderBy('score', 'desc')
+        // ->with('slugHistories')
+        // ->paginate(10);
     }
 
 

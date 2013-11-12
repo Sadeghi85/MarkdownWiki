@@ -1,7 +1,7 @@
 <?php namespace Admin;
 
-use Sadeghi85\Path;
 use Sadeghi85\Sanitize;
+use Sadeghi85\Utility;
 
 class PostsController extends \BaseController {
 
@@ -46,16 +46,16 @@ class PostsController extends \BaseController {
         	'task' => \Input::get('task'),
             'title' => \Input::get('title'),
 
-            'main_tag' => \Input::get('main_tag'),
-            'old_main_tag' => \Input::get('old_main_tag'),
+            'main-tag' => \Input::get('main-tag'),
+            'old_main-tag' => \Input::get('old_main-tag'),
 
             'content' => \Input::get('content'),
             
-            'slug' => \Input::get('slug'),
-            'old_slug' => \Input::get('old_slug'),
+            'alias' => \Input::get('alias'),
+            'old_alias' => \Input::get('old_alias'),
 
-            'minor_tags' => \Input::get('minor_tags'),
-            'old_minor_tags' => \Input::get('old_minor_tags'),
+            'minor-tags' => \Input::get('minor-tags'),
+            'old_minor-tags' => \Input::get('old_minor-tags'),
 
             'publish' => \Input::get('publish'),
             'list' => \Input::get('list'),
@@ -66,8 +66,8 @@ class PostsController extends \BaseController {
         	'task'  => 'Required',
             'title'  => 'Required',
 
-            'main_tag'  => 'Required',
-            'old_main_tag'  => 'Required',
+            'main-tag'  => 'Required',
+            'old_main-tag'  => 'Required',
 
             'content'  => 'Required',
         );
@@ -87,47 +87,48 @@ class PostsController extends \BaseController {
         	########## Title
         	$userData['title'] = Sanitize::title($userData['title']);
 
-        	########## Slug
-        	if ( ! $userData['slug'])
+        	########## Alias
+        	if ( ! $userData['alias'])
         	{
-        		$userData['slug'] = $userData['title'];
+        		$userData['alias'] = $userData['title'];
         	}
 
-        	$userData['slug'] = Sanitize::slug($userData['slug']);
+        	$userData['alias'] = Sanitize::alias($userData['alias']);
 
             ######### Tags
-			$userData['main_tag'] = Sanitize::tag($userData['main_tag']);
-			$userData['old_main_tag'] = Sanitize::tag($userData['old_main_tag']);
+			$userData['main-tag'] = Sanitize::tag($userData['main-tag']);
+			$userData['old_main-tag'] = Sanitize::tag($userData['old_main-tag']);
 
-			$temp_tags = array_filter(explode(',', $userData['minor_tags']), 'strlen');
-			$temp_old_tags = array_filter(explode(',', $userData['old_minor_tags']), 'strlen');
+			$tempTags = array_filter(explode(',', $userData['minor-tags']), 'strlen');
+			$tempOldTags = array_filter(explode(',', $userData['old_minor-tags']), 'strlen');
 
             $tags = array();
-            $old_tags = array();
+            $oldTags = array();
 
-            foreach ($temp_tags as $temp_tag)
+            foreach ($tempTags as $tempTag)
 			{
-				$tags[] = Sanitize::tag($temp_tag);
-			}
-			foreach ($temp_old_tags as $temp_old_tag)
-			{
-				$old_tags[] = Sanitize::tag($temp_old_tag);
+				$tags[] = Sanitize::tag($tempTag);
 			}
 
-			$tags[] = $userData['main_tag'];
-			$old_tags[] = $userData['old_main_tag'];
+			foreach ($tempOldTags as $tempOldTag)
+			{
+				$oldTags[] = Sanitize::tag($tempOldTag);
+			}
+
+			$tags[] = $userData['main-tag'];
+			$oldTags[] = $userData['old_main-tag'];
 
 			$tags = array_unique($tags);
-			$old_tags = array_unique($old_tags);
+			$oldTags = array_unique($oldTags);
             
-            $tagsToBeRemoved = array_diff($old_tags, $tags);
-			$tagsToBeAdded = array_diff($tags, $old_tags);
+            $tagsToBeRemoved = array_diff($oldTags, $tags);
+			$tagsToBeAdded = array_diff($tags, $oldTags);
 
 			#############
 
 			$rules = array(
-	            'slug'  => 'required',
-	            'main_tag'  => 'Required',
+	            'alias'  => 'required',
+	            'main-tag'  => 'Required',
 	        );
 
 	        $validator = \Validator::make($userData, $rules);
@@ -144,19 +145,23 @@ class PostsController extends \BaseController {
 			$oPost->published = (int)(bool)($userData['publish']);
 			$oPost->list = (int)(bool)($userData['list']);
 			$oPost->title = ($userData['title']);
-			$oPost->slug = $userData['slug'];
-			$oPost->main_tag = ($userData['main_tag']);
+			$oPost->alias = ($userData['alias']);
+			$oPost->main_tag = ($userData['main-tag']);
 			$oPost->content = ($userData['content']);
+			$oPost->search_content = Utility::setSearchContent($userData['content']);
+			$oPost->search_title = Utility::setSearchContent($userData['title']);
+
 			$oPost->save();
 
-			$oldSlug = sprintf('/%s/%s_%s', $userData['old_main_tag'], $oPost->id, $userData['old_slug']);
-        	$newSlug = sprintf('/%s/%s_%s', $userData['main_tag'], $oPost->id, $userData['slug']);
+			$oldSlug = sprintf('/%s/%s_%s', $userData['old_main-tag'], $oPost->id, $userData['old_alias']);
+        	$newSlug = sprintf('/%s/%s_%s', $userData['main-tag'], $oPost->id, $userData['alias']);
 
 			if ($oldSlug != $newSlug)
 			{
 				$oSlug = new \SlugHistories;
 				$oSlug->post_id = $oPost->id;
 				$oSlug->slug = $newSlug;
+
 				$oSlug->save();
 			}
 
@@ -177,6 +182,7 @@ class PostsController extends \BaseController {
 				{
 					$oTag = new \Tag;
 					$oTag->tag = $tag;
+
 					$oTag->save();
 
 					$oPost->tags()->attach($oTag->id);
@@ -187,11 +193,11 @@ class PostsController extends \BaseController {
 			{
 				case 'apply':
 					// Redirect to edit
-            		return \Redirect::route('do-edit', array($id))->with('success', 'Post is saved.');
+            		return \Redirect::route('edit', array($id))->with('success', \Lang::get('site.post-edited'));
 					break;
 				case 'save':
 					// Redirect to posts
-            		return \Redirect::route('posts')->with('success', 'Post is saved.');
+            		return \Redirect::route('posts')->with('success', \Lang::get('site.post-edited'));
 					break;
 
 				default:
