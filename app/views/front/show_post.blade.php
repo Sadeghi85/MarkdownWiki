@@ -6,16 +6,6 @@
 	<link href="{{ asset('/assets/css/show_post.css') }}" rel="stylesheet">
 
 	<style type="text/css">
-  		.home-posts {
-  			background-color: #fff;
-	        border: 1px solid #e5e5e5;
-	        -webkit-border-radius: 5px;
-	        -moz-border-radius: 5px;
-	        border-radius: 5px;
-	        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  		}
   		
     </style>
 @stop
@@ -27,18 +17,38 @@
 @stop
 
 @section('content')
-<div class="row-fluid">
-	<div class="span12 home-posts">
-		<div class="offset1 span10">
-			<h3>{{ $title }}</h3>
+<div class="col-md-12">
+	<div class="row box">
+		<div class="col-md-12">
+			<h3>{{ $post->title }}</h3>
 			<hr>
-
-			{{-- Markdown::string(html_entity_decode($content, ENT_QUOTES, 'UTF-8')) --}}
 
 			<?php
 				$md = new dflydev\markdown\MarkdownExtraParser();
 			?>
-			{{ $md->transformMarkdown(html_entity_decode($content, ENT_QUOTES, 'UTF-8')); }}
+			<p>
+				{{ $md->transformMarkdown(html_entity_decode($post->content, ENT_QUOTES, 'UTF-8')); }}
+			</p>
+
+			<p>&nbsp;</p>
+			
+			<p>
+				{{-- <i class="icon-user"></i> by <a href="#">John</a> 
+				| <i class="icon-calendar"></i> Sept 16th, 2012
+				| <i class="icon-comment"></i> <a href="#">3 Comments</a>
+				| <i class="icon-share"></i> <a href="#">39 Shares</a>
+				| --}}
+				<?php
+				  $tags = $post->tags()->get();
+				?>
+
+				<i class="icon-tags"></i> {{ Lang::get('site.tags') }} :
+				@foreach ($tags as $tag)
+
+				  <a href="{{ URL::route('front-tag', $tag->tag) }}"><span class="label label-info">{{ str_replace('-', ' ', $tag->tag) }}</span></a> 
+				@endforeach
+
+			</p>
 			
 			
 

@@ -45,6 +45,8 @@
 	<h3 class="form-signin-heading">{{ Lang::get('site.posts') }}</h3>
 	<p>&nbsp;</p>
 
+  {{ Route::getCurrentRoute()->getPath() }}
+
 	<div class="table-responsive">
 	  <table class="table table-hover table-bordered">
 	  	<thead>

@@ -9950,6 +9950,52 @@ class View extends Illuminate\Support\Facades\View{
 
 class Debugbar extends Barryvdh\Debugbar\Facade{
 	/**
+	 * 
+	 *
+	 * @param \Illuminate\Foundation\Application $app
+	 * @static 
+	 */
+	 public static function __construct($app = null){
+		 Barryvdh\Debugbar\LaravelDebugbar::__construct($app);
+	 }
+
+	/**
+	 * Enable the Debugbar and boot, if not already booted.
+	 *
+	 * @static 
+	 */
+	 public static function enable(){
+		 Barryvdh\Debugbar\LaravelDebugbar::enable();
+	 }
+
+	/**
+	 * Disable the Debugbar
+	 *
+	 * @static 
+	 */
+	 public static function disable(){
+		 Barryvdh\Debugbar\LaravelDebugbar::disable();
+	 }
+
+	/**
+	 * Boot the debugbar (add collectors, renderer and listener)
+	 *
+	 * @static 
+	 */
+	 public static function boot(){
+		 Barryvdh\Debugbar\LaravelDebugbar::boot();
+	 }
+
+	/**
+	 * 
+	 *
+	 * @static 
+	 */
+	 public static function shouldCollect($name, $default = false){
+		 Barryvdh\Debugbar\LaravelDebugbar::shouldCollect($name, $default);
+	 }
+
+	/**
 	 * Starts a measure
 	 *
 	 * @param string $name Internal name, used to stop the measure
@@ -10873,7 +10919,7 @@ if ( ! function_exists('e'))
 if ( ! function_exists('ends_with'))
 {
 	/**
-	 * Determine if a given string ends with a given needle.
+	 * Determine if a given string ends with a given substring.
 	 *
 	 * @param string $haystack
 	 * @param string|array $needle
@@ -11105,7 +11151,7 @@ if ( ! function_exists('snake_case'))
 if ( ! function_exists('starts_with'))
 {
 	/**
-	 * Determine if a string starts with a given needle.
+	 * Determine if a given string starts with a given substring.
 	 *
 	 * @param  string  $haystack
 	 * @param  string|array  $needle
@@ -11133,7 +11179,7 @@ if ( ! function_exists('storage_path'))
 if ( ! function_exists('str_contains'))
 {
 	/**
-	 * Determine if a given string contains a given sub-string.
+	 * Determine if a given string contains a given substring.
 	 *
 	 * @param  string        $haystack
 	 * @param  string|array  $needle

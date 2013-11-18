@@ -76,6 +76,7 @@
 @section('container')
 <div class="container">
   <div class="row">
+    
     <div class="col-md-2">
       <div class="well sidebar-nav">
         <ul class="nav nav-list">
@@ -86,6 +87,8 @@
               array('label' => Lang::get('site.new'), 'routes' => array('default'=>'new')),
               array('label' => Lang::get('site.posts'), 'routes' => array('default'=>'posts', 'edit')),
               array('label' => Lang::get('site.lists'), 'routes' => array('default'=>'lists')),
+              array('label' => Lang::get('site.featured'), 'routes' => array('default'=>'featured')),
+              array('label' => Lang::get('site.draft'), 'routes' => array('default'=>'draft')),
             );
           ?>
           @foreach ($navs as $nav)

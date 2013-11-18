@@ -20,14 +20,28 @@ class PostsController extends \BaseController {
 
 	public function showPosts()
 	{
-		$posts = \DB::table('posts')->where('list', 0)->paginate(10);
+		$posts = \Post::newest()->search(\Input::get('s'))->with('slugHistories')->paginate(10);
 
 		return \View::make('admin.posts', array('posts' => $posts));
 	}
 
 	public function showLists()
 	{
-		$posts = \DB::table('posts')->where('list', 1)->paginate(10);
+		$posts = \Post::newest()->search(\Input::get('s'))->where('list', 1)->with('slugHistories')->paginate(10);
+
+		return \View::make('admin.posts', array('posts' => $posts));
+	}
+
+	public function showFeatured()
+	{
+		$posts = \Post::newest()->search(\Input::get('s'))->where('featured', 1)->with('slugHistories')->paginate(10);
+
+		return \View::make('admin.posts', array('posts' => $posts));
+	}
+
+	public function showDraft()
+	{
+		$posts = \Post::newest()->search(\Input::get('s'))->where('published', 0)->with('slugHistories')->paginate(10);
 
 		return \View::make('admin.posts', array('posts' => $posts));
 	}
@@ -57,8 +71,9 @@ class PostsController extends \BaseController {
             'minor-tags' => \Input::get('minor-tags'),
             'old_minor-tags' => \Input::get('old_minor-tags'),
 
-            'publish' => \Input::get('publish'),
+            'featured' => \Input::get('featured'),
             'list' => \Input::get('list'),
+            'publish' => \Input::get('publish'),
         );
 		
         // Declare the rules for the form validation.
@@ -143,6 +158,7 @@ class PostsController extends \BaseController {
 
 			$oPost = \Post::findOrFail($id);
 			$oPost->published = (int)(bool)($userData['publish']);
+			$oPost->featured = (int)(bool)($userData['featured']);
 			$oPost->list = (int)(bool)($userData['list']);
 			$oPost->title = ($userData['title']);
 			$oPost->alias = ($userData['alias']);

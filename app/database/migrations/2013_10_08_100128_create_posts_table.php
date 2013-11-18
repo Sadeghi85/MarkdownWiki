@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration {
 			
 			$table->increments('id');
 			$table->enum('published', array('0', '1'))->default('0');
+			$table->enum('featured', array('0', '1'))->default('0');
 			$table->enum('list', array('0', '1'))->default('0');
 			$table->string('title');
 			$table->string('alias')->unique();

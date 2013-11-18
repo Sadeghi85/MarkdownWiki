@@ -22,8 +22,14 @@ Route::get('search', array('as' => 'search', 'uses' => 'Front\HomeController@sho
 Route::get('administrator', array('as' => 'login', 'uses' => 'Front\HomeController@showLogin'));
 Route::post('administrator', array('before' => 'csrf', 'as' => 'do-login', 'uses' => 'Front\HomeController@doLogin'));
 
+// Posts
+Route::get('posts', array('as' => 'front-posts', 'uses' => 'Front\HomeController@showPosts'));
+// Lists
+Route::get('lists', array('as' => 'front-lists', 'uses' => 'Front\HomeController@showLists'));
 // Tags
-Route::get('tag/{tag}', array('as' => 'tag', 'uses' => 'Front\HomeController@showTagPosts'))
+Route::get('tags', array('as' => 'front-tags', 'uses' => 'Front\HomeController@showTags'));
+// Tag-Post
+Route::get('tag/{tag}', array('as' => 'front-tag', 'uses' => 'Front\HomeController@showTagPosts'))
 ->where('tag', '[\p{N}\p{L}\p{S}]+');
 
 // Zip contents
@@ -54,6 +60,10 @@ Route::post('administrator/new', array('before' => 'csrf', 'as' => 'do-new', 'us
 Route::get('administrator/posts', array('as' => 'posts', 'uses' => 'Admin\PostsController@showPosts'));
 // List lists
 Route::get('administrator/lists', array('as' => 'lists', 'uses' => 'Admin\PostsController@showLists'));
+// List featured
+Route::get('administrator/featured', array('as' => 'featured', 'uses' => 'Admin\PostsController@showFeatured'));
+// List draft
+Route::get('administrator/draft', array('as' => 'draft', 'uses' => 'Admin\PostsController@showDraft'));
 
 // Edit post
 Route::get('administrator/edit/{id}', array('as' => 'edit', 'uses' => 'Admin\PostsController@showEdit'))
@@ -80,7 +90,7 @@ Route::get('{main_tag}/{post_id}_{slug}', function($main_tag, $post_id, $slug)
 
 		if ($post)
 		{
-			return View::make('front.show_post', array('title' => $post->title, 'content' => $post->content));
+			return View::make('front.show_post', array('post' => $post));
 		}
 	}
 	elseif ($thisSlug and $lastSlug)

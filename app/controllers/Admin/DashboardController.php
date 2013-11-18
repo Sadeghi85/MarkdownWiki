@@ -39,8 +39,9 @@ class DashboardController extends \BaseController {
             
             'alias' => \Input::get('alias'),
             'minor-tags' => \Input::get('minor-tags'),
-            'publish' => \Input::get('publish'),
+            'featured' => \Input::get('featured'),
             'list' => \Input::get('list'),
+            'publish' => \Input::get('publish'),
         );
 		
         // Declare the rules for the form validation.
@@ -108,6 +109,7 @@ class DashboardController extends \BaseController {
 
 			$oPost = new \Post;
 			$oPost->published = (int)(bool)($userData['publish']);
+			$oPost->featured = (int)(bool)($userData['featured']);
 			$oPost->list = (int)(bool)($userData['list']);
 			$oPost->title = ($userData['title']);
 			$oPost->alias = ($userData['alias']);
@@ -145,10 +147,10 @@ class DashboardController extends \BaseController {
 			
 			switch ($userData['task'])
 			{
-				// case 'apply':
-				// 	// Redirect to edit
-    //         		return \Redirect::route('do-edit', array($id))->with('success', 'Post is saved.');
-				// 	break;
+				case 'apply':
+					// Redirect to edit
+            		return \Redirect::route('new')->with('success', \Lang::get('site.post-created'));
+					break;
 				case 'save':
 					// Redirect to posts
             		return \Redirect::route('dashboard')->with('success', \Lang::get('site.post-created'));
@@ -159,6 +161,8 @@ class DashboardController extends \BaseController {
             		return \Redirect::route('dashboard');
 					break;
 			}
+
+			
         }
 
         // Something went wrong.

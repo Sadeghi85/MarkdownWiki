@@ -72,8 +72,9 @@
 
 		<!-- Submit button -->
 		<div class="form-group">
-				<button href="#" onclick="submitform('save')" class="btn btn-success"><i class="icon-ok">&nbsp;</i>{{ Lang::get('site.save') }}</button>
-				<button href="#" onclick="submitform('cancel')" class="btn btn-default"><i class="icon-remove">&nbsp;</i>{{ Lang::get('site.close') }}</button>
+			<button href="#" onclick="submitform('apply')" class="btn btn-success"><i class="icon-edit icon-white">&nbsp;</i>{{ Lang::get('site.save') }}</button>
+			<button href="#" onclick="submitform('save')" class="btn btn-default"><i class="icon-ok">&nbsp;</i>{{ Lang::get('site.save-close') }}</button>
+			<button href="#" onclick="submitform('cancel')" class="btn btn-default"><i class="icon-remove">&nbsp;</i>{{ Lang::get('site.close') }}</button>
 		</div>
 
 		<p>&nbsp;</p>
@@ -173,17 +174,17 @@
 			</fieldset>
 		</div>
 
-		<!-- Publish -->
+		<!-- Featured -->
 		<div class="form-group">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
-						<label class="control-label">{{ Lang::get('site.publish') }}</label>
+						<label class="control-label">{{ Lang::get('site.featured') }}</label>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<div class="row">
-						{{ Form::checkbox('publish', 'publish', (Input::old('publish') ? true : false), array('class' => 'checkbox-inline')) }}
+						{{ Form::checkbox('featured', 'featured', (Input::old('featured') ? true : false), array('class' => 'checkbox-inline')) }}
 					</div>
 				</div>
 			</fieldset>
@@ -204,7 +205,23 @@
 				</div>
 			</fieldset>
 		</div>
-		
+
+		<!-- Publish -->
+		<div class="form-group">
+			<fieldset class="form-inline">
+				<div class="col-md-2">
+					<div class="row">
+						<label class="control-label">{{ Lang::get('site.publish') }}</label>
+					</div>
+				</div>
+				<div class="col-md-10">
+					<div class="row">
+						{{ Form::checkbox('publish', 'publish', (Input::old('publish') ? true : false), array('class' => 'checkbox-inline')) }}
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
 	{{ Form::close() }}
 </div>
 </div>

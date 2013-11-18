@@ -96,7 +96,31 @@
 @section('container')
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+
+      <div class="col-md-2">
+        <div class="well sidebar-nav">
+          <ul class="nav nav-list">
+            <li class="nav-header">{{ Lang::get('site.tasks') }}</li>
+            <?php
+              $navs = array(
+                array('label' => Lang::get('site.posts'), 'routes' => array('default'=>'front-posts')),
+                array('label' => Lang::get('site.lists'), 'routes' => array('default'=>'front-lists')),
+                array('label' => Lang::get('site.tags'), 'routes' => array('default'=>'front-tags')),
+                
+              );
+            ?>
+            @foreach ($navs as $nav)
+              @if (in_array(Route::currentRouteName(), $nav['routes']))
+                <li class="active"><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+              @else
+                <li><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+              @endif
+            @endforeach
+          </ul>
+        </div><!--/.well -->
+      </div><!--/.col-->
+
+      <div class="col-md-10">
         @yield('content')
       </div>
     </div>

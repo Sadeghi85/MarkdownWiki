@@ -31,9 +31,19 @@ class Post extends Eloquent {
         
     }
 
-    public function search($str)
+    public function scopeNewest($query)
+    {
+        return $query->orderBy('updated_at', 'desc');
+    }
+
+    public function scopeSearch($query, $str)
     {
     	$str = trim($str);
+
+        if ( ! $str)
+        {
+            return $query;
+        }
 
     	$terms = array();
     	$explodedTerms = explode(' ', $str);
@@ -45,10 +55,8 @@ class Post extends Eloquent {
 
     	$terms = implode(' ', $terms);
 
-    	return $this->whereRaw('MATCH (search_title, search_content) AGAINST (? IN BOOLEAN MODE)', array($terms))
-    	->orderBy('updated_at', 'desc')
-        ->with('slugHistories')
-        ->paginate(10);
+        return $query
+                    ->whereRaw('MATCH (search_title, search_content) AGAINST (? IN BOOLEAN MODE)', array($terms));
 
         // $escapedTerms = DB::connection()->getPdo()->quote($terms);
 

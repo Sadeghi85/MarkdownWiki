@@ -194,17 +194,17 @@
 			</fieldset>
 		</div>
 
-		<!-- Publish -->
+		<!-- Featured -->
 		<div class="form-group">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
-						<label class="control-label">{{ Lang::get('site.publish') }}</label>
+						<label class="control-label">{{ Lang::get('site.featured') }}</label>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<div class="row">
-						{{ Form::checkbox('publish', 'publish', ((isset($post->published) ? $post->published : Input::old('publish')) ? true : false), array('class' => 'checkbox-inline')) }}
+						{{ Form::checkbox('featured', 'featured', ((isset($post->featured) ? $post->featured : Input::old('featured')) ? true : false), array('class' => 'checkbox-inline')) }}
 					</div>
 				</div>
 			</fieldset>
@@ -225,7 +225,23 @@
 				</div>
 			</fieldset>
 		</div>
-		
+
+		<!-- Publish -->
+		<div class="form-group">
+			<fieldset class="form-inline">
+				<div class="col-md-2">
+					<div class="row">
+						<label class="control-label">{{ Lang::get('site.publish') }}</label>
+					</div>
+				</div>
+				<div class="col-md-10">
+					<div class="row">
+						{{ Form::checkbox('publish', 'publish', ((isset($post->published) ? $post->published : Input::old('publish')) ? true : false), array('class' => 'checkbox-inline')) }}
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
 	{{ Form::close() }}
 </div>
 </div>

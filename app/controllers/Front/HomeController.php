@@ -21,14 +21,16 @@ class HomeController extends \BaseController {
 
 	public function showHome()
 	{
-		return \View::make('front.home');
+        $posts = \Post::where('featured', 1)->where('published', 1)->paginate(10);
+
+        return \View::make('front.show_posts', array('posts' => $posts));
+		//return \View::make('front.home', array('posts' => $posts));
 	}
 
      public function showSearch()
     {
-        $oSearch = new \Post;
-        $results = $oSearch->search(\Input::get('s'));
-               
+        $results = \Post::newest()->search(\Input::get('s'))->where('published', 1)->with('slugHistories')->paginate(10);
+
         return \View::make('front.show_search', array('results' => $results));
     }
 	
@@ -102,12 +104,31 @@ class HomeController extends \BaseController {
         $zip->finalize();
     }
 
+    public function showPosts()
+    {
+        $posts = \Post::where('list', 0)->where('published', 1)->paginate(10);
+
+        return \View::make('front.show_posts', array('posts' => $posts));
+    }
+
+    public function showLists()
+    {
+        $posts = \Post::where('list', 1)->where('published', 1)->paginate(10);
+
+        return \View::make('front.show_posts', array('posts' => $posts));
+    }
+
+    public function showTags()
+    {
+        return \View::make('front.show_tags');
+    }
+
     public function showTagPosts($tag)
     {
         $oTag = \Tag::where('tag', $tag)->firstOrFail();
         $posts = $oTag->posts()->where('published', 1)->paginate(10);
 
-        return \View::make('front.show_tag_posts', array('posts' => $posts));
+        return \View::make('front.show_posts', array('posts' => $posts));
     }
 
    

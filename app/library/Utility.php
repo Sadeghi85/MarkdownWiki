@@ -29,7 +29,8 @@ class Utility {
 
 	static function setSearchContent($str)
 	{
-		return preg_replace('#(?:^|\s)(\S{2,3})(?:\s|$)#iu', '\1__', $str);
+		$str = mb_strtolower($str);
+		return preg_replace('#(^|\s)(\S{2,3})(\s|$)#iu', '\1\2__\3', $str);
 	}
 
 
