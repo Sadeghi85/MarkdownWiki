@@ -43,6 +43,26 @@
 			form.task.value = task;
 			form.submit();
 		}
+
+		$(document).ready(function()
+		{
+		    var target = null;
+
+		    $('#edit-form :input').click(function()
+		    {
+		        target = this.id;
+		        //alert(target);
+		    });
+
+		    $('#edit-form').submit(function()
+		    {
+		    	if (target == 'delete')
+		    	{
+		    		document.location.href='{{ URL::route('delete', $post->id) }}';
+		    		return false;
+		    	}
+		    });
+		});
 	</script>
 @stop
 
@@ -72,9 +92,11 @@
 
 		<!-- Submit button -->
 		<div class="form-group">
-			<button href="#" onclick="submitform('apply')" class="btn btn-success"><i class="icon-edit icon-white">&nbsp;</i>{{ Lang::get('site.save') }}</button>
-			<button href="#" onclick="submitform('save')" class="btn btn-default"><i class="icon-ok">&nbsp;</i>{{ Lang::get('site.save-close') }}</button>
-			<button href="#" onclick="submitform('cancel')" class="btn btn-default"><i class="icon-remove">&nbsp;</i>{{ Lang::get('site.close') }}</button>
+			<button href="#" onclick="submitform('apply')" class="btn btn-success"><i class="glyphicon glyphicon-pencil">&nbsp;</i>{{ Lang::get('site.save') }}</button>
+			<button href="#" onclick="submitform('save')" class="btn btn-default"><i class="glyphicon glyphicon-ok">&nbsp;</i>{{ Lang::get('site.save-close') }}</button>
+			<button href="#" onclick="submitform('cancel')" class="btn btn-default"><i class="glyphicon glyphicon-remove">&nbsp;</i>{{ Lang::get('site.close') }}</button>
+
+			<button href="#" id="delete" class="btn btn-danger pull-right"><i class="glyphicon glyphicon-trash">&nbsp;</i>{{ Lang::get('site.delete') }}</button>
 		</div>
 		
 		<p>&nbsp;</p>

@@ -9,6 +9,7 @@ return array(
     'success' => 'با موفقیت انجام شد',
     'post-created' => 'مطلب ایجاد شد',
     'post-edited' => 'مطلب ویرایش شد',
+    'post-deleted' => 'مطلب حذف شد',
     'new-post' => 'مطلب جدید',
     'edit-post' => 'ویرایش مطلب',
     'save' => 'ذخیره',
@@ -26,6 +27,10 @@ return array(
     'list' => 'لیست',
     'featured' => 'ویژه',
     'draft' => 'پیش نویس',
+    'delete' => 'حذف',
+
+    'yes' => 'بله',
+    'no' => 'خیر',
 
     'tags' => 'تگ ها',
     'read-more' => 'ادامه',

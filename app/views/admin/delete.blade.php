@@ -25,6 +25,19 @@
 	</style>
 @stop
 
+@section('javascript')
+@parent
+  <script type="text/javascript">
+    submitform = function(task)
+    {
+      form = document.getElementById('delete-form');
+      form.task.value = task;
+      form.submit();
+    }
+
+  </script>
+@stop
+
 @section('content')
 <div class="row">
   <div class="col-md-12">
@@ -42,16 +55,36 @@
 
 <div class="row">
 <div class="col-md-12 form-login">
-	<h3 class="form-signin-heading">{{ Lang::get('site.posts') }}</h3>
-	<p>&nbsp;</p>
+	
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <div class="row">
+        <div class="col-md-offset-2">
+          <strong>Are you sure to delete this post permanently?</strong>
+        </div>
+      </div>
+      <p>&nbsp;</p>
+      <div class="row">
+        <div class="col-md-offset-3 col-md-2">
+          {{ Form::open(array('route' => array('do-delete', $post->id), 'id' => 'delete-form')) }}
 
-  {{ Form::open(array('url' => Route::getCurrentRoute()->getPath(), 'method' => 'get', 'class' => 'form-inline')) }}
-    <div class="form-group">
-        {{ Form::text('s', Input::get('s'), array('class'=>'form-control', 'placeholder'=> Lang::get('site.search').'...', 'style' => 'width:250px;')) }}
-
-        <button class="btn btn-default btn-md" type="submit"><span class="glyphicon glyphicon-search"></button>
+            <!-- Task -->
+            {{ Form::hidden('task', '', array()) }}
+            
+            <!-- Submit button -->
+            <div class="form-group">
+              <button href="#" onclick="submitform('delete')" class="btn btn-danger">{{ Lang::get('site.yes') }}</button>
+            </div>
+            
+          {{ Form::close() }}
+        </div>
+        
+        <div class="col-md-offset-1 col-md-2">
+          <a href="#" class="btn btn-default" onclick="javascript:window.history.back(-1);return false;">{{ Lang::get('site.no') }}</a>
+        </div>
+      </div>
     </div>
-  {{ Form::close() }}
+  </div>
 
   <p>&nbsp;</p>
 
@@ -69,14 +102,10 @@
         </tr>
       </thead>
       <tbody>
-		    @foreach ($posts as $post)
-			     <tr><td>{{ $post->id }}</td><td>{{ $post->published }}</td><td><a href="{{ URL::Route('edit', array($post->id)) }}">{{ $post->title }}</a></td><td>{{ $post->main_tag }}</td><td>{{ $post->alias }}</td><td>{{ $post->created_at }}</td><td>{{ $post->updated_at }}</td></tr>
-			 @endforeach
+			     <tr><td>{{ $post->id }}</td><td>{{ $post->published }}</td><td>{{ $post->title }}</td><td>{{ $post->main_tag }}</td><td>{{ $post->alias }}</td><td>{{ $post->created_at }}</td><td>{{ $post->updated_at }}</td></tr>
 		  </tbody>
 	  </table>
 	</div>
-
-	{{ $posts->links() }}
 </div>
 </div>
 @stop

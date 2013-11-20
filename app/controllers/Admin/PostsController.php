@@ -228,4 +228,20 @@ class PostsController extends \BaseController {
         // Something went wrong.
         return \Redirect::route('edit', array($id))->withErrors($validator)->withInput($userData);
 	}
+
+	public function showDelete($id)
+	{
+		$post = \Post::with('tags')->findOrFail($id);
+
+		return \View::make('admin.delete', array('post' => $post));
+	}
+
+	public function doDelete($id)
+	{
+		$post = \Post::findOrFail($id);
+
+		$post->delete();
+		
+		return \Redirect::route('posts')->with('success', \Lang::get('site.post-deleted'));
+	}
 }

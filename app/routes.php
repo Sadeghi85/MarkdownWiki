@@ -71,6 +71,11 @@ Route::get('administrator/edit/{id}', array('as' => 'edit', 'uses' => 'Admin\Pos
 Route::post('administrator/edit/{id}', array('before' => 'csrf', 'as' => 'do-edit', 'uses' => 'Admin\PostsController@doEdit'))
 ->where('id', '\d+');
 
+// Delete post
+Route::get('administrator/delete/{id}', array('as' => 'delete', 'uses' => 'Admin\PostsController@showDelete'))
+->where('id', '\d+');
+Route::post('administrator/delete/{id}', array('before' => 'csrf', 'as' => 'do-delete', 'uses' => 'Admin\PostsController@doDelete'))
+->where('id', '\d+');
 
 
 

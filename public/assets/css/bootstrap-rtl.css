@@ -224,6 +224,13 @@ th {
   left: 0;
 }
 
+/* pull-right */
+.pull-right {
+  float: left !important;
+}
+
+/* pull-right */
+
 .nav-tabs-justified > li > a {
   margin-left: 0;
 }

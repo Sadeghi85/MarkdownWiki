@@ -56,7 +56,7 @@ return array(
        'views' => true,             // Views with their data
        'route' => true,             // Current route information
        'laravel' => true,          // Laravel version and environment
-       'events' => true,           // All events fired
+       'events' => false,           // All events fired
        'twig' => false,             // Twig, requires barryvdh/laravel-twigbridge
        'default_request'=> false,   // Regular or special Symfony request logger
        'symfony_request'=> true,    // Only one can be enabled..
