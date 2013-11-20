@@ -57,8 +57,6 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
             <li class="active"><a href="/">{{Lang::get('site.home')}}</a></li>
-            <li><a href="/about">{{Lang::get('site.about')}}</a></li>
-            <li><a href="/contact">{{Lang::get('site.contact')}}</a></li>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{Lang::get('site.more')}} <b class="caret"></b></a>

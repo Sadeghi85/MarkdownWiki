@@ -2,8 +2,6 @@
 
 return array(
     'home' => 'خانه',
-    'about' => 'درباره',
-    'contact' => 'تماس',
 
     'new' => 'جدید',
     'success' => 'با موفقیت انجام شد',
