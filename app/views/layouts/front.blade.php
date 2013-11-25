@@ -96,9 +96,10 @@
     <div class="row">
 
       <div class="col-md-2">
-        <div class="well sidebar-nav">
-          <ul class="nav nav-list">
-            <li class="nav-header">{{ Lang::get('site.tasks') }}</li>
+        <div class="bs-sidebar">
+          <ul class="nav bs-sidenav">
+            <li class="header">{{ Lang::get('site.tasks') }}</li>
+            
             <?php
               $navs = array(
                 array('label' => Lang::get('site.posts'), 'routes' => array('default'=>'front-posts')),
@@ -108,14 +109,21 @@
               );
             ?>
             @foreach ($navs as $nav)
-              @if (in_array(Route::currentRouteName(), $nav['routes']))
-                <li class="active"><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+
+              @if (isset($nav['routes']))
+                @if (in_array(Route::currentRouteName(), $nav['routes']))
+                  <?php $_class = 'active' ?>
+                @else
+                  <?php $_class = '' ?>
+                @endif
+
+                <li class="{{ $_class }}"><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
               @else
-                <li><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+                <li class="divider"></li>
               @endif
             @endforeach
           </ul>
-        </div><!--/.well -->
+        </div>
       </div><!--/.col-->
 
       <div class="col-md-10">

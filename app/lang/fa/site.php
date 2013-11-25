@@ -22,6 +22,8 @@ return array(
     'published' => 'وضعیت انتشار',
     'created' => 'ایجاد شده',
     'modified' => 'تغییر داده شده',
+    'file-name' => 'نام فایل',
+    'file-size' => 'حجم',
     'list' => 'لیست',
     'featured' => 'ویژه',
     'draft' => 'پیش نویس',
@@ -32,6 +34,11 @@ return array(
 
     'tags' => 'تگ ها',
     'read-more' => 'ادامه',
+    'media-manager' => 'مدیریت فایل ها',
+    'media' => 'فایل ها',
+    'upload' => 'آپلود',
+    'upload-media' => 'آپلود فایل',
+    'media-uploaded' => 'فایل آپلود شد',
 
     'more' => 'بیشتر',
     'zip' => 'ذخیره مطالب',

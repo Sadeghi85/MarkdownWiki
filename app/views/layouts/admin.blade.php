@@ -78,9 +78,10 @@
   <div class="row">
     
     <div class="col-md-2">
-      <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-          <li class="nav-header">{{ Lang::get('site.tasks') }}</li>
+      <div class="bs-sidebar">
+        <ul class="nav bs-sidenav">
+          <li class="header">{{ Lang::get('site.tasks') }}</li>
+          
           <?php
             $navs = array(
               array('label' => Lang::get('site.home'), 'routes' => array('default'=>'dashboard')),
@@ -89,17 +90,26 @@
               array('label' => Lang::get('site.lists'), 'routes' => array('default'=>'lists')),
               array('label' => Lang::get('site.featured'), 'routes' => array('default'=>'featured')),
               array('label' => Lang::get('site.draft'), 'routes' => array('default'=>'draft')),
+              array(),
+              array('label' => Lang::get('site.media-manager'), 'routes' => array('default'=>'media')),
             );
           ?>
           @foreach ($navs as $nav)
-            @if (in_array(Route::currentRouteName(), $nav['routes']))
-              <li class="active"><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+
+            @if (isset($nav['routes']))
+              @if (in_array(Route::currentRouteName(), $nav['routes']))
+                <?php $_class = 'active' ?>
+              @else
+                <?php $_class = '' ?>
+              @endif
+
+              <li class="{{ $_class }}"><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
             @else
-              <li><a href="{{ URL::Route($nav['routes']['default']) }}">{{{ $nav['label'] }}}</a></li>
+              <li class="divider"></li>
             @endif
           @endforeach
         </ul>
-      </div><!--/.well -->
+      </div>
    </div><!--/.col-->
 
    <div class="col-md-10">
@@ -124,6 +134,8 @@
     <script src="{{ asset('/assets/js/markdown.js') }}"></script>
     <script src="{{ asset('/assets/js/to-markdown.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-tag.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap.file-input.js') }}"></script>
+    
 
     <script src="{{ asset('/assets/js/highlight.js/highlight.pack.js') }}"></script>
     <script>

@@ -77,6 +77,11 @@ Route::get('administrator/delete/{id}', array('as' => 'delete', 'uses' => 'Admin
 Route::post('administrator/delete/{id}', array('before' => 'csrf', 'as' => 'do-delete', 'uses' => 'Admin\PostsController@doDelete'))
 ->where('id', '\d+');
 
+// Media manager
+Route::get('administrator/media', array('as' => 'media', 'uses' => 'Admin\MediaController@showMedia'));
+Route::post('administrator/media', array('before' => 'csrf', 'as' => 'upload', 'uses' => 'Admin\MediaController@doUpload'));
+Route::get('administrator/media-download/{id}', array('as' => 'media-download', 'uses' => 'Admin\MediaController@mediaDownload'))->where('id', '\d+');
+
 
 
 

@@ -31,6 +31,9 @@ class CreatePostsTable extends Migration {
 			$table->softDeletes();
 		});
 
+		DB::statement('ALTER TABLE `posts` MODIFY COLUMN `content` LONGTEXT NOT NULL;');
+		DB::statement('ALTER TABLE `posts` MODIFY COLUMN `search_content` LONGTEXT NOT NULL;');
+
 		DB::statement('ALTER TABLE `posts` ADD FULLTEXT search_fulltext (`search_title`, `search_content`)');
 	}
 
