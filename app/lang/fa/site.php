@@ -28,6 +28,8 @@ return array(
     'featured' => 'ویژه',
     'draft' => 'پیش نویس',
     'delete' => 'حذف',
+    'delete-post' => 'حذف این مطلب را تایید می کنید؟',
+    'status' => 'وضعیت',
 
     'yes' => 'بله',
     'no' => 'خیر',

@@ -7,18 +7,6 @@
 	</style>
 @stop
 
-@section('javascript')
-@parent
-	<script type="text/javascript">
-		submitform = function(task)
-		{
-			form = document.getElementById('new-form');
-			form.task.value = task;
-			form.submit();
-		}
-	</script>
-@stop
-
 @section('content')
 <div class="row">
   	<div class="col-md-12">
@@ -53,7 +41,7 @@
 		<p>&nbsp;</p>
 		
 		<!-- Title -->
-		<div class="form-group {{ $errors->has('title') ? 'error' : '' }}">
+		<div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -72,7 +60,7 @@
 		</div>
 
 		<!-- Alias -->
-		<div class="form-group {{{ $errors->has('alias') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('alias') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -91,7 +79,7 @@
 		</div>
 
 		<!-- Main tag -->
-		<div class="form-group {{{ $errors->has('main-tag') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('main-tag') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -110,7 +98,7 @@
 		</div>
 
 		<!-- Minor tags -->
-		<div class="form-group {{{ $errors->has('minor-tags') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('minor-tags') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -129,7 +117,7 @@
 		</div>
 
 		<!-- Content -->
-		<div class="form-group {{{ $errors->has('content') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('content') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -147,55 +135,136 @@
 			</fieldset>
 		</div>
 
-		<!-- Featured -->
 		<div class="form-group">
+		    <label class="col-md-2 control-label">{{ Lang::get('site.status') }}</label>
+		    <div class="col-md-10">
+		    	<div class="row">
+			    	<!-- Featured -->
+			      	<label class="control-label">
+			      		{{ Form::checkbox('featured', 'featured', (Input::old('featured') ? true : false), array('class' => 'checkbox-inline')) }} {{ Lang::get('site.featured') }}
+			      	</label>
+
+			      	<!-- List -->
+			      	<label class="control-label">
+			       		 {{ Form::checkbox('list', 'list', (Input::old('list') ? true : false), array('class' => 'checkbox-inline')) }} {{ Lang::get('site.list') }}
+		     	 	</label>
+
+		     	 	<!-- Publish -->
+			      	<label class="control-label">
+			        {{ Form::checkbox('publish', 'publish', (Input::old('publish') ? true : false), array('class' => 'checkbox-inline')) }} {{ Lang::get('site.publish') }}
+			      	</label>
+		      	</div>
+		    </div>
+		</div>
+
+
+		<p>&nbsp;</p>
+
+
+		<!-- Button trigger modal -->
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+		  Launch demo modal
+		</button>
+
+		<p>&nbsp;</p>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+
+      	<div class="form-group">
 			<fieldset class="form-inline">
-				<div class="col-md-2">
+				<div class="col-md-1">
 					<div class="row">
-						<label class="control-label">{{ Lang::get('site.featured') }}</label>
+						<label class="control-label">id</label>
 					</div>
 				</div>
-				<div class="col-md-10">
+				<div class="col-md-2">
 					<div class="row">
-						{{ Form::checkbox('featured', 'featured', (Input::old('featured') ? true : false), array('class' => 'checkbox-inline')) }}
+						<input class="form-control" name="fake-attachment-id" id="fake-attachment-id" type="text">
+					</div>
+				</div>
+				<div class="col-md-2 col-md-offset-1">
+					<div class="row">
+						<label class="control-label">comment</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<input class="form-control" name="fake-attachment-comment" id="fake-attachment-comment" type="text">
 					</div>
 				</div>
 			</fieldset>
 		</div>
 
-		<!-- List -->
-		<div class="form-group">
-			<fieldset class="form-inline">
-				<div class="col-md-2">
-					<div class="row">
-						<label class="control-label">{{ Lang::get('site.list') }}</label>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<div class="row">
-						{{ Form::checkbox('list', 'list', (Input::old('list') ? true : false), array('class' => 'checkbox-inline')) }}
-					</div>
-				</div>
-			</fieldset>
-		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="add-attachment">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-		<!-- Publish -->
-		<div class="form-group">
-			<fieldset class="form-inline">
-				<div class="col-md-2">
-					<div class="row">
-						<label class="control-label">{{ Lang::get('site.publish') }}</label>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<div class="row">
-						{{ Form::checkbox('publish', 'publish', (Input::old('publish') ? true : false), array('class' => 'checkbox-inline')) }}
-					</div>
-				</div>
-			</fieldset>
-		</div>
 
 	{{ Form::close() }}
 </div>
 </div>
+@stop
+
+@section('javascript')
+@parent
+	<script type="text/javascript">
+		submitform = function(task)
+		{
+			form = document.getElementById('new-form');
+			form.task.value = task;
+			form.submit();
+		}
+
+
+		$(function() {
+			$('#add-attachment').click(function() {
+				$('#new-form').append(
+					'<div class="form-group">\
+						<fieldset class="form-inline"> \
+							<div class="col-md-1"> \
+								<div class="row"> \
+									<label class="control-label">' + 'id' + '</label> \
+								</div> \
+							</div> \
+							<div class="col-md-2"> \
+								<div class="row"> \
+									<input class="form-control" name="attachment-id[]" value="' + $('#fake-attachment-id').val() + '" type="text"> \
+								</div> \
+							</div> \
+							<div class="col-md-2 col-md-offset-1"> \
+								<div class="row"> \
+									<label class="control-label">' + 'comment' + '</label> \
+								</div> \
+							</div> \
+							<div class="col-md-6"> \
+								<div class="row"> \
+									<input class="form-control" name="attachment-comment[]" value="' + $('#fake-attachment-comment').val() + '" type="text"> \
+								</div> \
+							</div> \
+						</fieldset> \
+					</div>'
+				);
+
+				$('#fake-attachment-id').val('');
+				$('#fake-attachment-comment').val('');
+
+				$('#myModal').modal('hide')
+
+				
+			});
+		});
+	</script>
 @stop

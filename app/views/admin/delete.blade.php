@@ -42,8 +42,8 @@
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
       <div class="row">
-        <div class="col-md-offset-2">
-          <strong>Are you sure to delete this post permanently?</strong>
+        <div class="col-md-12" style="text-align: center">
+          <strong>{{ Lang::get('site.delete-post') }}</strong>
         </div>
       </div>
       <p>&nbsp;</p>

@@ -31,5 +31,10 @@ class Media extends Eloquent {
         
  //    }
 
+	public function scopeNewest($query)
+    {
+        return $query->orderBy('updated_at', 'desc');
+    }
+
    
 }

@@ -17,7 +17,7 @@ class MediaController extends \BaseController {
 
 	public function showMedia()
 	{
-		$media = \Media::paginate(10);
+		$media = \Media::newest()->paginate(10);
 
 		return \View::make('admin.media', array('media' => $media));
 	}
@@ -25,6 +25,7 @@ class MediaController extends \BaseController {
 	public function doUpload()
 	{
 		$files = \Input::file('files');
+		$success = false;
 
 		foreach ($files as $file)
 		{
@@ -37,10 +38,19 @@ class MediaController extends \BaseController {
 				$oMedia->content = file_get_contents($file->getRealPath());
 
 				$oMedia->save();
+
+				$success = true;
 			}
 		}
 
-		return \Redirect::route('media')->with('success', \Lang::get('site.media-uploaded'));
+		if ($success)
+		{
+			return \Redirect::route('media')->with('success', \Lang::get('site.media-uploaded'));
+		}
+		else
+		{
+			return \Redirect::route('media');
+		}
 	}
 
 	public function mediaDownload($id)
