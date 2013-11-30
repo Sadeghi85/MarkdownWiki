@@ -157,13 +157,13 @@
 		    </div>
 		</div>
 
-
 		<p>&nbsp;</p>
 
+		<hr>
 
 		<!-- Button trigger modal -->
 		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-		  Launch demo modal
+			{{ Lang::get('site.add-attachment') }}
 		</button>
 
 		<p>&nbsp;</p>
@@ -174,25 +174,25 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">{{ Lang::get('site.add-attachment') }}</h4>
       </div>
       <div class="modal-body">
 
       	<div class="form-group">
 			<fieldset class="form-inline">
-				<div class="col-md-1">
+				<div class="col-md-2">
 					<div class="row">
-						<label class="control-label">id</label>
+						<label class="control-label">{{ Lang::get('site.id') }}</label>
 					</div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-1">
 					<div class="row">
 						<input class="form-control" name="fake-attachment-id" id="fake-attachment-id" type="text">
 					</div>
 				</div>
 				<div class="col-md-2 col-md-offset-1">
 					<div class="row">
-						<label class="control-label">comment</label>
+						<label class="control-label">{{ Lang::get('site.comment') }}</label>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -205,8 +205,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="add-attachment">Save changes</button>
+        <button type="button" class="btn btn-primary" id="add-attachment">{{ Lang::get('site.save') }}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ Lang::get('site.close') }}</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -232,29 +232,33 @@
 		$(function() {
 			$('#add-attachment').click(function() {
 				$('#new-form').append(
-					'<div class="form-group">\
-						<fieldset class="form-inline"> \
-							<div class="col-md-1"> \
-								<div class="row"> \
-									<label class="control-label">' + 'id' + '</label> \
+					'<div class="alert alert-dismissable alert-info"> \
+						<button type="button" class="close" data-dismiss="alert">&times;</button> \
+						<p>&nbsp;</p> \
+						<div class="form-group">\
+							<fieldset class="form-inline"> \
+								<div class="col-md-2"> \
+									<div class="row"> \
+										<label class="control-label">' + '{{ Lang::get("site.id") }}' + '</label> \
+									</div> \
 								</div> \
-							</div> \
-							<div class="col-md-2"> \
-								<div class="row"> \
-									<input class="form-control" name="attachment-id[]" value="' + $('#fake-attachment-id').val() + '" type="text"> \
+								<div class="col-md-1"> \
+									<div class="row"> \
+										<input class="form-control" name="attachment-id[]" value="' + $('#fake-attachment-id').val() + '" type="text"> \
+									</div> \
 								</div> \
-							</div> \
-							<div class="col-md-2 col-md-offset-1"> \
-								<div class="row"> \
-									<label class="control-label">' + 'comment' + '</label> \
+								<div class="col-md-2 col-md-offset-1"> \
+									<div class="row"> \
+										<label class="control-label">' + '{{ Lang::get("site.comment") }}' + '</label> \
+									</div> \
 								</div> \
-							</div> \
-							<div class="col-md-6"> \
-								<div class="row"> \
-									<input class="form-control" name="attachment-comment[]" value="' + $('#fake-attachment-comment').val() + '" type="text"> \
+								<div class="col-md-6"> \
+									<div class="row"> \
+										<input class="form-control" name="attachment-comment[]" value="' + $('#fake-attachment-comment').val() + '" type="text"> \
+									</div> \
 								</div> \
-							</div> \
-						</fieldset> \
+							</fieldset> \
+						</div> \
 					</div>'
 				);
 
@@ -265,6 +269,11 @@
 
 				
 			});
+
+			$(document).on("click", ".close", function() {
+			    $(this).parent().remove();
+			});
+
 		});
 	</script>
 @stop

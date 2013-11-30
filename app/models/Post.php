@@ -18,6 +18,19 @@ class Post extends Eloquent {
 	 */
 	// protected $hidden = array('password');
 
+    /**
+     * Many to many relationship.
+     *
+     * @return Model
+     */
+    public function media()
+    {
+        // Second argument is the name of pivot table.
+        // Third & forth arguments are the names of foreign keys.
+        return $this->belongsToMany('Media', 'media_post', 'post_id', 'media_id')->withPivot('comment')->withTimestamps();
+        
+    }
+
 	/**
 	 * Many to many relationship.
 	 *

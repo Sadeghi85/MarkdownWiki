@@ -21,7 +21,7 @@ class HomeController extends \BaseController {
 
 	public function showHome()
 	{
-        $posts = \Post::where('featured', 1)->where('published', 1)->paginate(10);
+        $posts = \Post::where('featured', 1)->where('published', 1)->newest()->paginate(10);
 
         return \View::make('front.show_posts', array('posts' => $posts));
 		//return \View::make('front.home', array('posts' => $posts));

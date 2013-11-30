@@ -32,6 +32,8 @@ Route::get('tags', array('as' => 'front-tags', 'uses' => 'Front\HomeController@s
 Route::get('tag/{tag}', array('as' => 'front-tag', 'uses' => 'Front\HomeController@showTagPosts'))
 ->where('tag', '[\p{N}\p{L}\p{S}]+');
 
+Route::get('media-download/{id}', array('as' => 'media-download', 'uses' => 'Admin\MediaController@mediaDownload'))->where('id', '\d+');
+
 // Zip contents
 Route::get('zip', array('as' => 'zip', 'uses' => 'Front\HomeController@zipContents'));
 
@@ -80,12 +82,6 @@ Route::post('administrator/delete/{id}', array('before' => 'csrf', 'as' => 'do-d
 // Media manager
 Route::get('administrator/media', array('as' => 'media', 'uses' => 'Admin\MediaController@showMedia'));
 Route::post('administrator/media', array('before' => 'csrf', 'as' => 'upload', 'uses' => 'Admin\MediaController@doUpload'));
-Route::get('administrator/media-download/{id}', array('as' => 'media-download', 'uses' => 'Admin\MediaController@mediaDownload'))->where('id', '\d+');
-
-
-
-
-
 
 
 // Catch all

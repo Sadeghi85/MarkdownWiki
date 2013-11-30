@@ -41,6 +41,10 @@ return array(
     'upload' => 'آپلود',
     'upload-media' => 'آپلود فایل',
     'media-uploaded' => 'فایل آپلود شد',
+    'add-attachment' => 'الحاق فایل',
+    'attachments' => 'الحاقات',
+    'id' => 'شناسه',
+    'comment' => 'توضیح',
 
     'more' => 'بیشتر',
     'zip' => 'ذخیره مطالب',

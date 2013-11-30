@@ -42,6 +42,9 @@ class DashboardController extends \BaseController {
             'featured' => \Input::get('featured'),
             'list' => \Input::get('list'),
             'publish' => \Input::get('publish'),
+
+            'attachment-id' => \Input::get('attachment-id', array()),
+            'attachment-comment' => \Input::get('attachment-comment', array()),
         );
 		
         // Declare the rules for the form validation.
@@ -90,6 +93,17 @@ class DashboardController extends \BaseController {
 			$tags[] = $userData['main-tag'];
 			$tags = array_unique($tags);
             
+            ######### Attachments
+			$tempAttachmentIDs = array_unique(array_filter($userData['attachment-id'], 'strlen'));
+			$tempAttachmentComments = array_filter($userData['attachment-comment'], 'strlen');
+
+			$attachments = array();
+
+			foreach ($tempAttachmentIDs as $key => $tempAttachmentID)
+			{
+				$attachments[] = array('id' => $tempAttachmentID, 'comment' => $tempAttachmentComments[$key]);
+			}
+
             ############
 
             $rules = array(
@@ -142,6 +156,16 @@ class DashboardController extends \BaseController {
 					$oTag->save();
 
 					$oPost->tags()->attach($oTag->id);
+				}
+			}
+
+			foreach ($attachments as $attachment)
+			{
+				$oMedia = \Media::find($attachment['id']);
+
+				if ($oMedia)
+				{
+					$oPost->media()->attach($oMedia->id, array('comment' => $attachment['comment']));
 				}
 			}
 			

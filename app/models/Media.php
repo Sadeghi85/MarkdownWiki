@@ -23,13 +23,13 @@ class Media extends Eloquent {
 	 *
 	 * @return Model
 	 */
-	// public function posts()
- //    {
-	// 	// Second argument is the name of pivot table.
-	// 	// Third & forth arguments are the names of foreign keys.
- //        return $this->belongsToMany('Post', 'media_post', 'post_id', 'media_id')->withTimestamps();
+	public function posts()
+    {
+		// Second argument is the name of pivot table.
+		// Third & forth arguments are the names of foreign keys.
+        return $this->belongsToMany('Post', 'media_post', 'media_id', 'post_id')->withPivot('comment')->withTimestamps();
         
- //    }
+    }
 
 	public function scopeNewest($query)
     {

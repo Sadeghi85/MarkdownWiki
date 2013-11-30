@@ -42,7 +42,7 @@
 				  $tags = $post->tags()->get();
 				?>
 
-				<i class="icon-tags"></i> {{ Lang::get('site.tags') }} :
+				<i class="glyphicon glyphicon-tags"></i> {{ Lang::get('site.tags') }} :
 				@foreach ($tags as $tag)
 
 				  <a href="{{ URL::route('front-tag', $tag->tag) }}"><span class="label label-info">{{ str_replace('-', ' ', $tag->tag) }}</span></a> 
@@ -50,7 +50,29 @@
 
 			</p>
 			
-			
+			<p>&nbsp;</p>
+
+			<?php
+			 	 $attachments = $post->media()->get();
+			?>
+			<p class="{{ count($attachments) ? '' : 'hide' }}">
+				
+
+				<i class="glyphicon glyphicon-paperclip"></i> {{ Lang::get('site.attachments') }} :
+				@foreach ($attachments as $attachment)
+					<div class="alert alert-block alert-info">
+						<div class="row">
+							<div class="col-md-3">
+				  				<a href="{{ URL::Route('media-download', array($attachment->id)) }}"><span class="label label-info">{{ $attachment->name }}</span></a>
+				  			</div>
+				  			<div class="col-md-9">
+				  				<span class="label label-info">{{ $attachment->pivot->comment }}</span>
+				  			</div>
+				  		</div>
+				  	</div>
+				@endforeach
+
+			</p>
 
 		</div>
 	</div>
