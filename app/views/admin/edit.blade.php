@@ -8,38 +8,6 @@
 	</style>
 @stop
 
-@section('javascript')
-@parent
-	<script type="text/javascript">
-		submitform = function(task)
-		{
-			form = document.getElementById('edit-form');
-			form.task.value = task;
-			form.submit();
-		}
-
-		$(document).ready(function()
-		{
-		    var target = null;
-
-		    $('#edit-form :input').click(function()
-		    {
-		        target = this.id;
-		        //alert(target);
-		    });
-
-		    $('#edit-form').submit(function()
-		    {
-		    	if (target == 'delete')
-		    	{
-		    		document.location.href='{{ URL::route('delete', $post->id) }}';
-		    		return false;
-		    	}
-		    });
-		});
-	</script>
-@stop
-
 @section('content')
 <div class="row">
   	<div class="col-md-12">
@@ -147,14 +115,11 @@
 						<?php 
 							$minorTags = '';
 
-							if ($post)
-							{	
-								foreach ($post->tags as $oTag)
+							foreach ($post->tags as $oTag)
+							{
+								if ($oTag->tag != $post->main_tag)
 								{
-									if ($oTag->tag != $post->main_tag)
-									{
-										$minorTags .= str_replace('-', ' ', $oTag->tag).',';
-									}
+									$minorTags .= str_replace('-', ' ', $oTag->tag).',';
 								}
 							}
 
@@ -190,55 +155,197 @@
 			</fieldset>
 		</div>
 
-		<!-- Featured -->
 		<div class="form-group">
-			<fieldset class="form-inline">
-				<div class="col-md-2">
-					<div class="row">
-						<label class="control-label">{{ Lang::get('site.featured') }}</label>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<div class="row">
-						{{ Form::checkbox('featured', 'featured', ((isset($post->featured) ? $post->featured : Input::old('featured')) ? true : false), array('class' => 'checkbox-inline')) }}
-					</div>
-				</div>
-			</fieldset>
+		    <label class="col-md-2 control-label">{{ Lang::get('site.status') }}</label>
+		    <div class="col-md-10">
+		    	<div class="row">
+			    	<!-- Featured -->
+			      	<label class="control-label">
+			      		{{ Form::checkbox('featured', 'featured', ((isset($post->featured) ? $post->featured : Input::old('featured')) ? true : false), array('class' => 'checkbox-inline')) }} {{ Lang::get('site.featured') }}
+			      	</label>
+
+			      	<!-- List -->
+			      	<label class="control-label">
+			       		 {{ Form::checkbox('list', 'list', ((isset($post->list) ? $post->list : Input::old('list')) ? true : false), array('class' => 'checkbox-inline')) }} {{ Lang::get('site.list') }}
+		     	 	</label>
+
+		     	 	<!-- Publish -->
+			      	<label class="control-label">
+			        {{ Form::checkbox('publish', 'publish', ((isset($post->published) ? $post->published : Input::old('publish')) ? true : false), array('class' => 'checkbox-inline')) }} {{ Lang::get('site.publish') }}
+			      	</label>
+		      	</div>
+		    </div>
 		</div>
 
-		<!-- List -->
-		<div class="form-group">
-			<fieldset class="form-inline">
-				<div class="col-md-2">
-					<div class="row">
-						<label class="control-label">{{ Lang::get('site.list') }}</label>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<div class="row">
-						{{ Form::checkbox('list', 'list', ((isset($post->list) ? $post->list : Input::old('list')) ? true : false), array('class' => 'checkbox-inline')) }}
-					</div>
-				</div>
-			</fieldset>
-		</div>
+		<p>&nbsp;</p>
 
-		<!-- Publish -->
-		<div class="form-group">
-			<fieldset class="form-inline">
-				<div class="col-md-2">
-					<div class="row">
-						<label class="control-label">{{ Lang::get('site.publish') }}</label>
-					</div>
+		<hr>
+
+		<!-- Button trigger modal -->
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+			{{ Lang::get('site.add-attachment') }}
+		</button>
+
+		<p>&nbsp;</p>
+
+		@foreach ($post->media as $oMedia)
+			<div class="alert alert-dismissable alert-info">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<p>&nbsp;</p>
+				<div class="form-group">
+					<fieldset class="form-inline">
+						<div class="col-md-2">
+							<div class="row">
+								<label class="control-label">{{ Lang::get("site.id") }}</label>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="row">
+								<input class="form-control" name="attachment-id[]" value="{{ $oMedia->id }}" type="text">
+							</div>
+						</div>
+						<div class="col-md-2 col-md-offset-1">
+							<div class="row">
+								<label class="control-label">{{ Lang::get("site.comment") }}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row">
+								<input class="form-control" name="attachment-comment[]" value="{{ $oMedia->pivot->comment }}" type="text">
+							</div>
+						</div>
+					</fieldset>
 				</div>
-				<div class="col-md-10">
-					<div class="row">
-						{{ Form::checkbox('publish', 'publish', ((isset($post->published) ? $post->published : Input::old('publish')) ? true : false), array('class' => 'checkbox-inline')) }}
-					</div>
+			</div>
+		@endforeach
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">{{ Lang::get('site.add-attachment') }}</h4>
+		      </div>
+		      <div class="modal-body">
+
+		      	<div class="form-group">
+					<fieldset class="form-inline">
+						<div class="col-md-2">
+							<div class="row">
+								<label class="control-label">{{ Lang::get('site.id') }}</label>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="row">
+								<input class="form-control" name="fake-attachment-id" id="fake-attachment-id" type="text">
+							</div>
+						</div>
+						<div class="col-md-2 col-md-offset-1">
+							<div class="row">
+								<label class="control-label">{{ Lang::get('site.comment') }}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row">
+								<input class="form-control" name="fake-attachment-comment" id="fake-attachment-comment" type="text">
+							</div>
+						</div>
+					</fieldset>
 				</div>
-			</fieldset>
-		</div>
+
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="add-attachment">{{ Lang::get('site.save') }}</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">{{ Lang::get('site.close') }}</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
 	{{ Form::close() }}
 </div>
 </div>
+@stop
+
+@section('javascript')
+@parent
+	<script type="text/javascript">
+		form_name = 'edit-form';
+
+		submitform = function(task)
+		{
+			form = document.getElementById(form_name);
+			form.task.value = task;
+			form.submit();
+		}
+
+		$(document).ready(function()
+		{
+		    var target = null;
+
+		    $('#edit-form :input').click(function()
+		    {
+		        target = this.id;
+		        //alert(target);
+		    });
+
+		    $('#edit-form').submit(function()
+		    {
+		    	if (target == 'delete')
+		    	{
+		    		document.location.href='{{ URL::route('delete', $post->id) }}';
+		    		return false;
+		    	}
+		    });
+		});
+
+
+		$(function() {
+			$('#add-attachment').click(function() {
+				$('#' + form_name).append(
+					'<div class="alert alert-dismissable alert-info"> \
+						<button type="button" class="close" data-dismiss="alert">&times;</button> \
+						<p>&nbsp;</p> \
+						<div class="form-group">\
+							<fieldset class="form-inline"> \
+								<div class="col-md-2"> \
+									<div class="row"> \
+										<label class="control-label">' + '{{ Lang::get("site.id") }}' + '</label> \
+									</div> \
+								</div> \
+								<div class="col-md-1"> \
+									<div class="row"> \
+										<input class="form-control" name="attachment-id[]" value="' + $('#fake-attachment-id').val() + '" type="text"> \
+									</div> \
+								</div> \
+								<div class="col-md-2 col-md-offset-1"> \
+									<div class="row"> \
+										<label class="control-label">' + '{{ Lang::get("site.comment") }}' + '</label> \
+									</div> \
+								</div> \
+								<div class="col-md-6"> \
+									<div class="row"> \
+										<input class="form-control" name="attachment-comment[]" value="' + $('#fake-attachment-comment').val() + '" type="text"> \
+									</div> \
+								</div> \
+							</fieldset> \
+						</div> \
+					</div>'
+				);
+
+				$('#fake-attachment-id').val('');
+				$('#fake-attachment-comment').val('');
+
+				$('#myModal').modal('hide')
+
+				
+			});
+
+			$(document).on("click", ".close", function() {
+			    $(this).parent().remove();
+			});
+
+		});
+	</script>
 @stop

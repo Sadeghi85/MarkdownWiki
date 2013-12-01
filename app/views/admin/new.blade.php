@@ -168,50 +168,49 @@
 
 		<p>&nbsp;</p>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">{{ Lang::get('site.add-attachment') }}</h4>
-      </div>
-      <div class="modal-body">
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">{{ Lang::get('site.add-attachment') }}</h4>
+		      </div>
+		      <div class="modal-body">
 
-      	<div class="form-group">
-			<fieldset class="form-inline">
-				<div class="col-md-2">
-					<div class="row">
-						<label class="control-label">{{ Lang::get('site.id') }}</label>
-					</div>
+		      	<div class="form-group">
+					<fieldset class="form-inline">
+						<div class="col-md-2">
+							<div class="row">
+								<label class="control-label">{{ Lang::get('site.id') }}</label>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="row">
+								<input class="form-control" name="fake-attachment-id" id="fake-attachment-id" type="text">
+							</div>
+						</div>
+						<div class="col-md-2 col-md-offset-1">
+							<div class="row">
+								<label class="control-label">{{ Lang::get('site.comment') }}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row">
+								<input class="form-control" name="fake-attachment-comment" id="fake-attachment-comment" type="text">
+							</div>
+						</div>
+					</fieldset>
 				</div>
-				<div class="col-md-1">
-					<div class="row">
-						<input class="form-control" name="fake-attachment-id" id="fake-attachment-id" type="text">
-					</div>
-				</div>
-				<div class="col-md-2 col-md-offset-1">
-					<div class="row">
-						<label class="control-label">{{ Lang::get('site.comment') }}</label>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="row">
-						<input class="form-control" name="fake-attachment-comment" id="fake-attachment-comment" type="text">
-					</div>
-				</div>
-			</fieldset>
-		</div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="add-attachment">{{ Lang::get('site.save') }}</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{ Lang::get('site.close') }}</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="add-attachment">{{ Lang::get('site.save') }}</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">{{ Lang::get('site.close') }}</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
 	{{ Form::close() }}
 </div>
@@ -221,9 +220,11 @@
 @section('javascript')
 @parent
 	<script type="text/javascript">
+		form_name = 'new-form';
+
 		submitform = function(task)
 		{
-			form = document.getElementById('new-form');
+			form = document.getElementById(form_name);
 			form.task.value = task;
 			form.submit();
 		}
@@ -231,7 +232,7 @@
 
 		$(function() {
 			$('#add-attachment').click(function() {
-				$('#new-form').append(
+				$('#' + form_name).append(
 					'<div class="alert alert-dismissable alert-info"> \
 						<button type="button" class="close" data-dismiss="alert">&times;</button> \
 						<p>&nbsp;</p> \

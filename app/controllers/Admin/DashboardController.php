@@ -97,11 +97,11 @@ class DashboardController extends \BaseController {
 			$tempAttachmentIDs = array_unique(array_filter($userData['attachment-id'], 'strlen'));
 			$tempAttachmentComments = array_filter($userData['attachment-comment'], 'strlen');
 
-			$attachments = array();
+			$syncAttachments = array();
 
 			foreach ($tempAttachmentIDs as $key => $tempAttachmentID)
 			{
-				$attachments[] = array('id' => $tempAttachmentID, 'comment' => $tempAttachmentComments[$key]);
+				$syncAttachments[$tempAttachmentID] = array('comment' => isset($tempAttachmentComments[$key]) ? $tempAttachmentComments[$key] : '');
 			}
 
             ############
@@ -159,15 +159,7 @@ class DashboardController extends \BaseController {
 				}
 			}
 
-			foreach ($attachments as $attachment)
-			{
-				$oMedia = \Media::find($attachment['id']);
-
-				if ($oMedia)
-				{
-					$oPost->media()->attach($oMedia->id, array('comment' => $attachment['comment']));
-				}
-			}
+			$oPost->media()->sync($syncAttachments);
 			
 			switch ($userData['task'])
 			{

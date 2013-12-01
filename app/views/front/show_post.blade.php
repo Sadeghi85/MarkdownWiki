@@ -62,12 +62,11 @@
 				@foreach ($attachments as $attachment)
 					<div class="alert alert-block alert-info">
 						<div class="row">
-							<div class="col-md-3">
-				  				<a href="{{ URL::Route('media-download', array($attachment->id)) }}"><span class="label label-info">{{ $attachment->name }}</span></a>
-				  			</div>
-				  			<div class="col-md-9">
-				  				<span class="label label-info">{{ $attachment->pivot->comment }}</span>
-				  			</div>
+							<a href="{{ URL::Route('media-download', array($attachment->id)) }}"><span class="label label-info">{{ $attachment->name }}</span></a>
+				  		</div>
+				  		<p>&nbsp;</p>
+				  		<div class="row">
+				  			<span class="label label-info">{{ $attachment->pivot->comment }}</span>
 				  		</div>
 				  	</div>
 				@endforeach

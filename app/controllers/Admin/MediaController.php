@@ -24,12 +24,12 @@ class MediaController extends \BaseController {
 
 	public function doUpload()
 	{
-		$files = \Input::file('files');
+		$files = array_filter(\Input::file('files', array()), 'strlen');
 		$success = false;
 
 		foreach ($files as $file)
 		{
-			if (is_object($file))
+			try
 			{
 				$oMedia = new \Media;
 				$oMedia->name = $file->getClientOriginalName();
@@ -40,6 +40,10 @@ class MediaController extends \BaseController {
 				$oMedia->save();
 
 				$success = true;
+			}
+			catch (Exception $e)
+			{
+
 			}
 		}
 

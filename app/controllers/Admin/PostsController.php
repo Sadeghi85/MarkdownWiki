@@ -48,7 +48,7 @@ class PostsController extends \BaseController {
 
 	public function showEdit($id)
 	{
-		$post = \Post::with('tags')->findOrFail($id);
+		$post = \Post::with('tags')->with('media')->findOrFail($id);
 
 		return \View::make('admin.edit', array('post' => $post));
 	}
@@ -74,6 +74,9 @@ class PostsController extends \BaseController {
             'featured' => \Input::get('featured'),
             'list' => \Input::get('list'),
             'publish' => \Input::get('publish'),
+
+            'attachment-id' => \Input::get('attachment-id', array()),
+            'attachment-comment' => \Input::get('attachment-comment', array()),
         );
 		
         // Declare the rules for the form validation.
@@ -139,7 +142,18 @@ class PostsController extends \BaseController {
             $tagsToBeRemoved = array_diff($oldTags, $tags);
 			$tagsToBeAdded = array_diff($tags, $oldTags);
 
-			#############
+			######### Attachments
+			$tempAttachmentIDs = array_unique(array_filter($userData['attachment-id'], 'strlen'));
+			$tempAttachmentComments = array_filter($userData['attachment-comment'], 'strlen');
+
+			$syncAttachments = array();
+
+			foreach ($tempAttachmentIDs as $key => $tempAttachmentID)
+			{
+				$syncAttachments[$tempAttachmentID] = array('comment' => isset($tempAttachmentComments[$key]) ? $tempAttachmentComments[$key] : '');
+			}
+
+            ############
 
 			$rules = array(
 	            'alias'  => 'required',
@@ -204,6 +218,8 @@ class PostsController extends \BaseController {
 					$oPost->tags()->attach($oTag->id);
 				}
 			}
+
+			$oPost->media()->sync($syncAttachments);
 
 			switch ($userData['task'])
 			{
