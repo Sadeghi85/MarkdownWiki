@@ -30,7 +30,7 @@ Route::get('lists', array('as' => 'front-lists', 'uses' => 'Front\HomeController
 Route::get('tags', array('as' => 'front-tags', 'uses' => 'Front\HomeController@showTags'));
 // Tag-Post
 Route::get('tag/{tag}', array('as' => 'front-tag', 'uses' => 'Front\HomeController@showTagPosts'))
-->where('tag', '[\p{N}\p{L}\p{S}]+');
+->where('tag', '[^\/_]+');
 
 Route::get('media-download/{id}', array('as' => 'media-download', 'uses' => 'Admin\MediaController@mediaDownload'))->where('id', '\d+');
 
