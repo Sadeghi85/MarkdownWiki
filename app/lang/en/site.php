@@ -1,0 +1,70 @@
+<?php
+
+return array(
+    'home' => 'Home',
+
+    'new' => 'New',
+    'success' => 'Done successfully',
+    'post-created' => 'Post created',
+    'post-edited' => 'Post edited',
+    'post-deleted' => 'Post deleted',
+    'new-post' => 'New post',
+    'edit-post' => 'Edit post',
+    'save' => 'Save',
+    'save-close' => 'Save & close',
+    'close' => 'Close',
+    'title' => 'Title',
+    'alias' => 'Alias',
+    'main-tag' => 'Main tag',
+    'minor-tags' => 'Minor tags',
+    'content' => 'Content',
+    'publish' => 'Publish',
+    'published' => 'Published',
+    'created' => 'Created',
+    'modified' => 'Modified',
+    'file-name' => 'File name',
+    'file-size' => 'File size',
+    'list' => 'List',
+    'featured' => 'Featured',
+    'draft' => 'Draft',
+    'delete' => 'Delete',
+    'delete-post' => 'Are you sure to delete this post?',
+    'status' => 'Status',
+
+    'yes' => 'Yes',
+    'no' => 'No',
+
+    'tags' => 'Tags',
+    'read-more' => 'Read more',
+    'media-manager' => 'Media manager',
+    'media' => 'Media',
+    'upload' => 'Upload',
+    'upload-media' => 'Upload file',
+    'media-uploaded' => 'File uploaded',
+    'add-attachment' => 'Add attachment',
+    'attachments' => 'Attachments',
+    'id' => 'ID',
+    'comment' => 'Comment',
+
+    'more' => 'More',
+    'zip' => 'Download contents',
+    'dashboard' => 'Dashboard',
+    'site' => 'Site',
+
+    'tasks' => 'Tasks',
+    'posts' => 'Posts',
+    'lists' => 'Lists',
+
+    'logged-in-as' => 'You are logged in as :name',
+    'login-message' => 'Please enter your credentials',
+    'login' => 'Login',
+    'logout' => 'Logout',
+
+    'username' => 'Username',
+    'password' => 'Password',
+    'remember-me' => 'Remember me',
+    'password-incorrect' => 'Password incorrect',
+
+    'search' => 'Search',
+
+);

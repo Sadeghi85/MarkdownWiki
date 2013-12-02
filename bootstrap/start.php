@@ -29,6 +29,7 @@ $app->redirectIfTrailingSlash();
 $env = $app->detectEnvironment(array(
 
 	'local' => array('markdown-wiki2.local'),
+	'pagoda' => array('markdown-wiki.gopagoda.com'),
 
 ));
 

@@ -44,7 +44,7 @@
 		<p>&nbsp;</p>
 		
 		<!-- Title -->
-		<div class="form-group {{ $errors->has('title') ? 'error' : '' }}">
+		<div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -63,7 +63,7 @@
 		</div>
 
 		<!-- Alias -->
-		<div class="form-group {{{ $errors->has('alias') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('alias') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -83,7 +83,7 @@
 		</div>
 
 		<!-- Main tag -->
-		<div class="form-group {{{ $errors->has('main-tag') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('main-tag') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -103,7 +103,7 @@
 		</div>
 
 		<!-- Minor tags -->
-		<div class="form-group {{{ $errors->has('minor-tags') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('minor-tags') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">
@@ -137,7 +137,7 @@
 		</div>
 
 		<!-- Content -->
-		<div class="form-group {{{ $errors->has('content') ? 'error' : '' }}}">
+		<div class="form-group {{{ $errors->has('content') ? 'has-error' : '' }}}">
 			<fieldset class="form-inline">
 				<div class="col-md-2">
 					<div class="row">

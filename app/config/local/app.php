@@ -53,7 +53,7 @@ return array(
 	|
 	*/
 
-	'locale' => 'fa',
+	'locale' => 'en',
 
 
 

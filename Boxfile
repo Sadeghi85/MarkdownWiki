@@ -1,0 +1,42 @@
+global:
+  env:
+    - LARAVEL_ENV: pagoda
+db1:
+  name: kathlyn
+  type: mysql
+  
+web1:
+  name: domonique
+  shared_writable_dirs:
+    - /app/storage/cache
+    - /app/storage/logs
+    - /app/storage/markdown
+    - /app/storage/meta
+    - /app/storage/sessions
+    - /app/storage/views
+    - /app/markdown
+  document_root: /public
+  php_version: 5.4.14
+  php_extensions:
+    - pdo_mysql
+    - mcrypt
+    - mbstring
+    - curl
+    - gd
+    - zip
+  zend_extensions:
+    - xcache
+  php_output_buffering: "4096"
+  php_max_execution_time: 30
+  php_max_input_time: 30
+  php_error_reporting: 0
+  #php_error_reporting: 30719
+  
+  after_build:
+    - "if [ ! -f composer.phar ]; then curl -s http://getcomposer.org/installer | php; fi; php composer.phar install"
+  #before_deploy:
+  #  - "php artisan migrate:install"
+  #  - "php artisan migrate"
+  after_deploy:
+    - "rm -f storage/cache/*"
+    - "rm -f storage/views/*"
