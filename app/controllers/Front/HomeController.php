@@ -29,9 +29,10 @@ class HomeController extends \BaseController {
 
      public function showSearch()
     {
-        $results = \Post::newest()->search(\Input::get('s'))->where('published', 1)->with('slugHistories')->paginate(10);
+        $posts = \Post::newest()->search(\Input::get('s'))->where('published', 1)->with('slugHistories')->paginate(10);
 
-        return \View::make('front.show_search', array('results' => $results));
+        //return \View::make('front.show_search', array('results' => $results));
+        return \View::make('front.show_posts', array('posts' => $posts));
     }
 	
 	public function showLogin()

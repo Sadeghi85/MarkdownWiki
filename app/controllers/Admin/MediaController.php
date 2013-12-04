@@ -61,10 +61,31 @@ class MediaController extends \BaseController {
 	{
 		$media = \Media::findOrFail($id);
 
-		$response = \Response::make($media->content, 200);
+		// check if the client validating cache and if it is current
+		if ((\Request::header('If-Modified-Since'))  && (strtotime(\Request::header('If-Modified-Since'))) == strtotime($media->updated_at))
+		{
 
-		$response->header('Content-Type', 'application/octet-stream');
-		$response->header('Content-Disposition', sprintf('attachment; filename="%s"', $media->name));
+		    // cache IS current, respond 304
+		    $response = \Response::make('', 304);
+
+		    //$response->header('Last-Modified', gmdate('D, d M Y H:i:s \G\M\T', strtotime($media->updated_at)));
+
+		}
+		else
+		{
+		    // not cached or client cache is older than server, respond 200 and output
+
+		    $response = \Response::make($media->content, 200);
+
+		    $expires = (7*24*60*60);
+
+		    $response->header('Last-Modified', gmdate('D, d M Y H:i:s \G\M\T', strtotime($media->updated_at)));
+		    $response->header('Cache-Control', 'max-age='.$expires);
+		    $response->header('Expires', gmdate('D, d M Y H:i:s \G\M\T', time() + $expires));
+
+		    $response->header('Content-Type', 'application/octet-stream');
+			$response->header('Content-Disposition', sprintf('attachment; filename="%s"', $media->name));
+		}
 
 		return $response;
 	}
