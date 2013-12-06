@@ -139,8 +139,23 @@
 
     <script src="{{ asset('/assets/js/highlight.js/highlight.pack.js') }}"></script>
     <script>
-      hljs.tabReplace = '    ';
-      hljs.initHighlightingOnLoad();
+		hljs.tabReplace = '    ';
+	  
+		$(document).ready( function() {
+			
+			$.each($('pre'), function(index, value) {
+
+					code = $(value).find('code').get(0);
+					
+					if ($(code).attr('class') != undefined)
+					{
+						hljs.highlightBlock(code);
+					}
+				}
+			);
+		});
+		
+		//hljs.initHighlightingOnLoad();
     </script>
 @show
 
