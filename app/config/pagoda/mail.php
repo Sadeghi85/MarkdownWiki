@@ -106,7 +106,7 @@ return array(
 	|
 	*/
 
-	'sendmail' => ini_get('sendmail_path'),
+	'sendmail' => ini_get('sendmail_path').' -bs',
 
 	/*
 	|--------------------------------------------------------------------------
