@@ -44,6 +44,7 @@ Route::get('backup', function()
 	
 	Mail::send('hello', array(), function($message)
 	{
+		$message->to('sadeghi85@hotmail.com', 'Sadeghi85')->subject('Markdown-Wiki Backup');
 		$message->attach('/var/www/app/storage/cache/markdown-wiki.latest.sql.gz', array('as' => 'markdown-wiki.latest.sql.gz', 'mime' => 'application/zip'));
 	});
 });
