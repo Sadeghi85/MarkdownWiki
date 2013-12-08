@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'mail',
+	'driver' => 'sendmail',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return array(
 	|
 	*/
 
-	'sendmail' => ini_get('sendmail_path').' -bs',
+	'sendmail' => '/usr/bin/pagoda-mail -bs --app '.preg_replace('/usr/bin/pagoda-mail --app ([a-z0-9]+)', '$1', ini_get('sendmail_path')),
 
 	/*
 	|--------------------------------------------------------------------------
