@@ -37,6 +37,17 @@ Route::get('media-download/{id}', array('as' => 'media-download', 'uses' => 'Adm
 // Zip contents
 Route::get('zip', array('as' => 'zip', 'uses' => 'Front\HomeController@zipContents'));
 
+// Mail Backup
+Route::get('backup', function()
+{
+	exec('mysqldump -h tunnel.pagodabox.com -u opal -pLvQWjSnb kathlyn | gzip > /var/www/app/storage/cache/markdown-wiki.latest.sql.gz');
+	
+	Mail::send('hello', array(), function($message)
+	{
+		$message->attach('/var/www/app/storage/cache/markdown-wiki.latest.sql.gz', array('as' => 'markdown-wiki.latest.sql.gz', 'mime' => 'application/zip'));
+	});
+});
+
 ################# Backend  #################
 // Auth filter on backend
 Route::when('administrator/*', 'auth');
