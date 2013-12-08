@@ -106,7 +106,7 @@ return array(
 	|
 	*/
 
-	'sendmail' => '/usr/bin/pagoda-mail --app 52a47b16a5ee7c9043000891',
+	'sendmail' => '/usr/bin/pagoda-mail --app 52a47b16a5ee7c9043000891 -bs',
 
 	/*
 	|--------------------------------------------------------------------------
