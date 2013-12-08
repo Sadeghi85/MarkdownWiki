@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.gmail.com',
+	'host' => 'smtp.mailgun.org',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'sadeghi85@hotmail.com', 'name' => 'Sadeghi 85'),
+	'from' => array('address' => null, 'name' => null),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'sadeghi85@gmail.com',
+	'username' => null,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => '~!zenith@#',
+	'password' => null,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return array(
 	|
 	*/
 
-	'sendmail' => '/usr/bin/pagoda-mail -bs --app '.preg_replace('#/usr/bin/pagoda-mail --app ([a-z0-9]+)#i', '$1', ini_get('sendmail_path')),
+	'sendmail' => '/usr/sbin/sendmail -t',
 
 	/*
 	|--------------------------------------------------------------------------
