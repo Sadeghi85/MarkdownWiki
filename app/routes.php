@@ -46,7 +46,7 @@ if ('pagoda' == app()->environment())
 		
 		Mail::send('hello', array(), function($message)
 		{
-			$message->to('sadeghi85@hotmail.com', 'Sadeghi 85')->subject('Markdown-Wiki Backup');
+			$message->to('sadeghi85@gmail.com', 'Sadeghi 85')->subject('Markdown-Wiki Backup');
 			$message->attach('/var/www/app/storage/cache/markdown-wiki.latest.sql.gz');
 		});
 	});
