@@ -42,11 +42,11 @@ if ('pagoda' == app()->environment())
 	// Mail Backup
 	Route::get('backup', function()
 	{
-		exec('mysqldump -h tunnel.pagodabox.com -u opal -pLvQWjSnb kathlyn | gzip > /var/www/app/storage/cache/markdown-wiki.latest.sql.gz');
+		exec('mysqldump -h '.$_SERVER['DB1_HOST'].' -u '.$_SERVER['DB1_USER'].' -p'.$_SERVER['DB1_PASS'].' '.$_SERVER['DB1_NAME'].' | gzip > /var/www/app/storage/cache/markdown-wiki.latest.sql.gz');
 		
 		Mail::send('hello', array(), function($message)
 		{
-			$message->to('sadeghi85@gmail.com', 'Sadeghi 85')->subject('Markdown-Wiki Backup');
+			$message->to('sadeghi85@hotmail.com', 'Sadeghi 85')->subject('Markdown-Wiki Backup');
 			$message->attach('/var/www/app/storage/cache/markdown-wiki.latest.sql.gz');
 		});
 	});
