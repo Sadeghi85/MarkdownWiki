@@ -6,8 +6,6 @@
 	"require": {
 		"laravel/framework": "4.0.*",
 		"dflydev/markdown": "1.0.*@dev",
-		"barryvdh/laravel-debugbar": "dev-master",
-		"barryvdh/laravel-ide-helper": "1.*",
 		"zendframework/zend-tag": "2.3.*@dev",
 		"zendframework/zend-servicemanager": "2.3.*@dev"
 	},

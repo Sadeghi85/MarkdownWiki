@@ -30,6 +30,7 @@ $env = $app->detectEnvironment(array(
 
 	'local' => array('markdown-wiki2.local'),
 	'pagoda' => array('markdown-wiki.gopagoda.com'),
+	'sadeghi85' => array('markdown-wiki.sadeghi85.ir'),
 
 ));
 
